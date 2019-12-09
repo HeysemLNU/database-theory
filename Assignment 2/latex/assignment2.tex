@@ -104,5 +104,19 @@
 
 
 
+\tableofcontents
+
+\section{Task 1}
+In this section we will use relational algebra to represent the requested queries.
+
+\begin{enumerate}
+	\item $\pi_{(name)}(\sigma_{(code=2DV513)}(student \bowtie enrolledIn))$	
+	\item $\pi_{(name)}(\sigma_{(code=2DV513\ \& \ code=1dv513)}(student \bowtie enrolledIn))$
+	\item $\pi_{(lecturer)}(\sigma_{(code=2DV610)}(subject))$
+	\item $\pi_{(lecturer)}(\sigma_{(code=1DV513\ \& \ code=2DV513)}(subject))$
+	\item $\pi_{(name)}((subject - \sigma_{lecturer=ilir} subject) \bowtie enrolledIn \bowtie student) $
+\end{enumerate}
+
+
 
 \end{document}
