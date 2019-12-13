@@ -1,0 +1,17 @@
+{
+  "name": "databaseassign2",
+  "version": "1.0.0",
+  "description": "Database theory reddit assignmenty",
+  "main": "app.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "databases"
+  ],
+  "author": "ab224hv, at222vk",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "mysql": "^2.17.1"
+  }
+}
