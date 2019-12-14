@@ -114,9 +114,24 @@ In this section we will use relational algebra to represent the requested querie
 	\item $\pi_{(name)}(\sigma_{(code=2DV513\ \& \ code=1dv513)}(student \bowtie enrolledIn))$
 	\item $\pi_{(lecturer)}(\sigma_{(code=2DV610)}(subject))$
 	\item $\pi_{(lecturer)}(\sigma_{(code=1DV513\ \& \ code=2DV513)}(subject))$
-	\item $\pi_{(name)}((subject - \sigma_{lecturer=ilir} subject) \bowtie enrolledIn \bowtie student) $
+	\item $\pi_{(name)}((subject - \sigma_{lecturer=ilir} subject) \bowtie enrolledIn \bowtie student)$
 \end{enumerate}
 
+
+
+\section{Task 2}
+\subsection{Part 1}
+
+
+Room has a dependency with day, time and manager. The reason we need manager in this dependency is because since two different rooms in the building could be booked at the same time in a day it is the manager that distinguishes the specific room. 
+
+Time has a dependency with manager, applicant, and day. Since for a specific applicant and manager at a certain date there will only be one time for the interview. If another interview must be conducted for the same applicant and manager, it will occur on a different date.
+
+\subsection{Part 2}
+We believe that in this relation the primary key is [manager,applicant,day] since each single manager can interview a single applicant on a single day at once. With these 3 columns we could find any individual row in the table.
+
+\subsection{Part 3}
+Firstly, the relation is not in BCNF because it contains a transitive dependency between room and time. Time is a prime value that depends on the key, and room is a prime value that depends on the time.
 
 
 \end{document}

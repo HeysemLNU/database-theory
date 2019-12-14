@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.11.17)  9 DEC 2019 20:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2019.11.17)  12 DEC 2019 21:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -854,14 +854,16 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14> not available
  (./assignment2.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 4.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 8.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 8.
 )
 \tf@toc=\write4
 \openout4 = `assignment2.toc'.
 
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 113.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 113.
+LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 123.
  [2
 
 
@@ -871,11 +873,11 @@ Package logreq Info: Writing requests to 'assignment2.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21459 strings out of 492167
- 396894 string characters out of 6131557
- 954355 words of memory out of 5000000
- 25626 multiletter control sequences out of 15000+600000
- 564485 words of font info for 57 fonts, out of 8000000 for 9000
+ 21461 strings out of 492167
+ 396925 string characters out of 6131557
+ 956355 words of memory out of 5000000
+ 25628 multiletter control sequences out of 15000+600000
+ 566181 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  44i,12n,67p,883b,2203s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
@@ -885,7 +887,7 @@ mr12.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/s
 hare/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf-dis
 t/fonts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times
 /utmr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on assignment2.pdf (2 pages, 652778 bytes).
+Output written on assignment2.pdf (2 pages, 657099 bytes).
 PDF statistics:
  49 PDF objects out of 1000 (max. 8388607)
  32 compressed objects within 1 object stream
