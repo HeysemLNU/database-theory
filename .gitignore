@@ -1,3 +1,5 @@
 *.bz2
 *.redditjson
 dbfiles/
+node_modules/
+.vscode/

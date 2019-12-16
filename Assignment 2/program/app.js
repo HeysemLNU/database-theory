@@ -1,7 +1,7 @@
 const mysql = require('mysql');
 const fs = require('fs');
 const readline = require('readline');
-const constrained = false;
+const constrained = true;
 
 // the values will be hardcoded
 let connection = '';
@@ -16,8 +16,6 @@ let connection = '';
  */
 // let importfiles = ['RC_2007-10.redditjson', 'RC_2011-07.redditjson', 'RC_2012-12.redditjson'];
 const importfiles = ['RC_2007-10.redditjson'];
-const bigassArray = [];
-
 
 const getConnection = () => {
   const options = {
@@ -36,8 +34,8 @@ const getConnection = () => {
 };
 
 const escapeQuotes = (string) => {
-   return string.replace(/"/g, '\\"');
-}
+  return string.replace(/"/g, '\\"');
+};
 
 const dataProcess = (importfile) => {
   const instream = fs.createReadStream(importfile);
@@ -108,11 +106,20 @@ const dataProcess = (importfile) => {
         VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${escapedBody}"
           ,"${parsedLine.score}","${parsedLine.created_utc}","${parsedLine.author}"
           ,"${parsedLine.link_id}")`);
+
+      // FAT TODO, so apparenlty in the unconstrained db
+      // we don't need to check for duplicate numbers, whereas
+      // in the constrained db first we need to do a query to see
+      // whether the entry exists already, or the query will
+      // spit out an error when trying to send it in :)
     });
 
     rl.on('close', () => {
       connection.end((err) => {
-        console.error(err);
+        if (err) {
+          console.error(err);
+        }
+        console.log('ALL DONE ON CURRENT FILE CONNECTION TO ONE DB CLOSED');
       });
     });
   });
