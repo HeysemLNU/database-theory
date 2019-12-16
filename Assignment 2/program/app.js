@@ -115,7 +115,7 @@ const dataProcess = (importfile) => {
         connection.query(`INSERT INTO posts (id, subr_id)
       VALUES ("${parsedLine.link_id}","${parsedLine.subreddit_id}")`);
 
-        connection.query(`INSERT INTO comments (comment_id, parent_id, body, score
+        connection.query(`INSERT INTO comments (id, parent_id, body, score
         ,created_time, author, post_id)
         VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${escapedBody}"
           ,"${parsedLine.score}","${parsedLine.created_utc}","${parsedLine.author}"
@@ -156,12 +156,12 @@ const dataProcess = (importfile) => {
         for (let counter = 0; counter < bigArray.length; counter++) {
           const parsedLine = JSON.parse(bigArray[counter]);
           const escapedBody = escapeQuotes(parsedLine.body);
-          connection.query(`INSERT INTO comments (comment_id, parent_id, body, score
+          connection.query(`INSERT INTO comments (id, parent_id, body, score
             ,created_time, author, post_id)
             VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${escapedBody}"
               ,"${parsedLine.score}","${parsedLine.created_utc}","${parsedLine.author}"
               ,"${parsedLine.link_id}")
-              ON DUPLICATE KEY UPDATE comment_id = "${parsedLine.id}"`);
+              ON DUPLICATE KEY UPDATE id = "${parsedLine.id}"`);
           console.log('added comments table line');
         }
         console.log('DONE ADDING TO DATABASE');
