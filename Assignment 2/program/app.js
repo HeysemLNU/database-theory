@@ -5,6 +5,7 @@ const constrained = true;
 
 // the values will be hardcoded
 let connection = '';
+const bigArray = [];
 
 /* const connectionRestricted = mysql.createConnection({
     host: 'localhost',
@@ -50,6 +51,8 @@ const dataProcess = (importfile) => {
       // in constraint mode because of the foreign key usage.
       // if the table with the key we want to use as a foreign key doesnt exist
       // then when assigning a foreign key in another table it wont work
+      // so what is going to be done is load the whole file into memory
+      // and THEN we can iterate on it 3 times (one for each of our tables)
       connection.query(`CREATE TABLE IF NOT EXISTS subreddits (
                     id VARCHAR(15) PRIMARY KEY,
                     name VARCHAR(255) NOT NULL
@@ -92,16 +95,28 @@ const dataProcess = (importfile) => {
     }
 
     rl.on('line', (line) => {
-      // time to add data to the dbs, we will start with the subreddit db
-      const parsedLine = JSON.parse(line);
-      const escapedBody = escapeQuotes(parsedLine.body);
-      connection.query(`INSERT INTO subreddits (id, name) 
+      if (constrained) {
+        // if the database is constrained i need to check if the field exists
+        // first in the database already (the primary key of the table)
+        // or whatever else is supposed to be unique.
+
+        // also something that I have thought... they should
+        // the tables that are a dependency to other tables
+        // should be filled up first before the others can be filled
+        // so here I will just load it all into memory and will act
+        // upon the thing on the "close" event (e.g iterate through it)
+        bigArray.push(line);
+      } else {
+        // time to add data to the dbs, we will start with the subreddit db
+        const parsedLine = JSON.parse(line);
+        const escapedBody = escapeQuotes(parsedLine.body);
+        connection.query(`INSERT INTO subreddits (id, name) 
       VALUES ("${parsedLine.subreddit_id}","${parsedLine.subreddit}")`);
 
-      connection.query(`INSERT INTO posts (id, subr_id)
+        connection.query(`INSERT INTO posts (id, subr_id)
       VALUES ("${parsedLine.link_id}","${parsedLine.subreddit_id}")`);
 
-      connection.query(`INSERT INTO comments (comment_id, parent_id, body, score
+        connection.query(`INSERT INTO comments (comment_id, parent_id, body, score
         ,created_time, author, post_id)
         VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${escapedBody}"
           ,"${parsedLine.score}","${parsedLine.created_utc}","${parsedLine.author}"
@@ -112,15 +127,27 @@ const dataProcess = (importfile) => {
       // in the constrained db first we need to do a query to see
       // whether the entry exists already, or the query will
       // spit out an error when trying to send it in :)
+      }
     });
 
     rl.on('close', () => {
-      connection.end((err) => {
-        if (err) {
-          console.error(err);
+      if (constrained) {
+        // need to go through the whole file 3 times what a cpu and RAM
+        // death for the constrained mode.. first will be the database
+        for (let counter = 0; counter < bigArray.length; counter++) {
+          const parsedLine = JSON.parse(bigArray[constrained]);
+          const escapedBody = escapeQuotes(parsedLine.body);
+
+          connection.query()
         }
-        console.log('ALL DONE ON CURRENT FILE CONNECTION TO ONE DB CLOSED');
-      });
+      } else {
+        connection.end((err) => {
+          if (err) {
+            console.error(err);
+          }
+          console.log('ALL DONE ON CURRENT FILE CONNECTION TO ONE DB CLOSED');
+        });
+      }
     });
   });
 };
