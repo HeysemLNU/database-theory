@@ -5,7 +5,7 @@ const constrained = true;
 
 // the values will be hardcoded
 let connection = '';
-const bigArray = [];
+let bigArray = [];
 
 /* const connectionRestricted = mysql.createConnection({
     host: 'localhost',
@@ -63,7 +63,7 @@ const dataProcess = (importfile) => {
                     CONSTRAINT FOREIGN KEY(subr_id) REFERENCES subreddits(id)
                 )`);
       connection.query(`CREATE TABLE IF NOT EXISTS comments (
-                    comment_id VARCHAR(10) PRIMARY KEY,
+                    id VARCHAR(15) PRIMARY KEY,
                     parent_id VARCHAR(15) NOT NULL,
                     body TEXT NOT NULL,
                     score INT NOT NULL,
@@ -72,7 +72,6 @@ const dataProcess = (importfile) => {
                     post_id VARCHAR(15),
                     CONSTRAINT FOREIGN KEY(post_id) REFERENCES posts(id)
                 )`);
-      console.log(`done`);
     } else {
       // here it doesnt matter the order we create the tables
       connection.query(`CREATE TABLE IF NOT EXISTS subreddits (
@@ -84,7 +83,7 @@ const dataProcess = (importfile) => {
                     subr_id VARCHAR(15) 
                 )`);
       connection.query(`CREATE TABLE IF NOT EXISTS comments (
-                    comment_id VARCHAR(10),
+                    id VARCHAR(15),
                     parent_id VARCHAR(15),
                     body TEXT,
                     score INT,
@@ -135,11 +134,38 @@ const dataProcess = (importfile) => {
         // need to go through the whole file 3 times what a cpu and RAM
         // death for the constrained mode.. first will be the database
         for (let counter = 0; counter < bigArray.length; counter++) {
-          const parsedLine = JSON.parse(bigArray[constrained]);
-          const escapedBody = escapeQuotes(parsedLine.body);
+          const parsedLine = JSON.parse(bigArray[counter]);
 
-          connection.query()
+          connection.query(`INSERT INTO subreddits(id, name) VALUES
+          ("${parsedLine.subreddit_id}", "${parsedLine.subreddit}")
+          ON DUPLICATE KEY UPDATE id = "${parsedLine.subreddit_id}"`);
+          console.log('added subreddit table line');
+          // what the above will do is just do nothing if the row already
+          // exists in the database (it will update the key with the same value
+          // so essentially it's like doing nothing)
+        } // once the first table is done, then we do the next table
+
+        for (let counter = 0; counter < bigArray.length; counter++) {
+          const parsedLine = JSON.parse(bigArray[counter]);
+          connection.query(`INSERT INTO posts (id, subr_id)
+          VALUES ("${parsedLine.link_id}","${parsedLine.subreddit_id}")
+          ON DUPLICATE KEY UPDATE id = "${parsedLine.link_id}"`);
+          console.log('added posts table line');
         }
+
+        for (let counter = 0; counter < bigArray.length; counter++) {
+          const parsedLine = JSON.parse(bigArray[counter]);
+          const escapedBody = escapeQuotes(parsedLine.body);
+          connection.query(`INSERT INTO comments (comment_id, parent_id, body, score
+            ,created_time, author, post_id)
+            VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${escapedBody}"
+              ,"${parsedLine.score}","${parsedLine.created_utc}","${parsedLine.author}"
+              ,"${parsedLine.link_id}")
+              ON DUPLICATE KEY UPDATE comment_id = "${parsedLine.id}"`);
+          console.log('added comments table line');
+        }
+        console.log('DONE ADDING TO DATABASE');
+        bigArray = null;
       } else {
         connection.end((err) => {
           if (err) {
