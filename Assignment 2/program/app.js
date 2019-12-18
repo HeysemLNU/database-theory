@@ -16,7 +16,7 @@ let bigArray = [];
 })
  */
 // let importfiles = ['RC_2007-10.redditjson', 'RC_2011-07.redditjson', 'RC_2012-12.redditjson'];
-const importfiles = ['RC_2007-10.redditjson'];
+const importfiles = ['RC_2011-07.redditjson'];
 
 const getConnection = () => {
   const options = {
@@ -34,8 +34,9 @@ const getConnection = () => {
   return mysql.createConnection(options);
 };
 
-const escapeQuotes = (string) => {
-  return string.replace(/"/g, '\\"');
+const escaper = (string) => {
+  // return string.replace(/"/g, '\\"').replace(/\\/g, '\\\\').replace(/\\n || \\r || \\r\\n/g, '\\\r\\\n');
+  return string.replace(/"/g, '\\"').replace(/\\/g, '\\\\');
 };
 
 const dataProcess = (importfile) => {
@@ -108,7 +109,6 @@ const dataProcess = (importfile) => {
       } else {
         // time to add data to the dbs, we will start with the subreddit db
         const parsedLine = JSON.parse(line);
-        const escapedBody = escapeQuotes(parsedLine.body);
         connection.query(`INSERT INTO subreddits (id, name) 
       VALUES ("${parsedLine.subreddit_id}","${parsedLine.subreddit}")`);
 
@@ -117,7 +117,7 @@ const dataProcess = (importfile) => {
 
         connection.query(`INSERT INTO comments (id, parent_id, body, score
         ,created_time, author, post_id)
-        VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${escapedBody}"
+        VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${parsedLine.body}"
           ,"${parsedLine.score}","${parsedLine.created_utc}","${parsedLine.author}"
           ,"${parsedLine.link_id}")`);
 
@@ -138,8 +138,9 @@ const dataProcess = (importfile) => {
 
           connection.query(`INSERT INTO subreddits(id, name) VALUES
           ("${parsedLine.subreddit_id}", "${parsedLine.subreddit}")
-          ON DUPLICATE KEY UPDATE id = "${parsedLine.subreddit_id}"`);
-          console.log('added subreddit table line');
+          ON DUPLICATE KEY UPDATE id = "${parsedLine.subreddit_id}"`, () => {
+            console.log(`SENT QUERY FOR LINE ${counter} of table SUBREDDITS into DB`);
+          });
           // what the above will do is just do nothing if the row already
           // exists in the database (it will update the key with the same value
           // so essentially it's like doing nothing)
@@ -149,20 +150,21 @@ const dataProcess = (importfile) => {
           const parsedLine = JSON.parse(bigArray[counter]);
           connection.query(`INSERT INTO posts (id, subr_id)
           VALUES ("${parsedLine.link_id}","${parsedLine.subreddit_id}")
-          ON DUPLICATE KEY UPDATE id = "${parsedLine.link_id}"`);
-          console.log('added posts table line');
+          ON DUPLICATE KEY UPDATE id = "${parsedLine.link_id}"`, () => {
+            console.log(`SENT QUERY FOR LINE ${counter} of table POSTS into DB`);
+          });
         }
 
         for (let counter = 0; counter < bigArray.length; counter++) {
           const parsedLine = JSON.parse(bigArray[counter]);
-          const escapedBody = escapeQuotes(parsedLine.body);
           connection.query(`INSERT INTO comments (id, parent_id, body, score
             ,created_time, author, post_id)
-            VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${escapedBody}"
+            VALUES ("${parsedLine.id}","${parsedLine.parent_id}","${parsedLine.body}"
               ,"${parsedLine.score}","${parsedLine.created_utc}","${parsedLine.author}"
               ,"${parsedLine.link_id}")
-              ON DUPLICATE KEY UPDATE id = "${parsedLine.id}"`);
-          console.log('added comments table line');
+              ON DUPLICATE KEY UPDATE id = "${parsedLine.id}"`, () => {
+            console.log(`SENT QUERY FOR LINE ${counter} of table COMMENTS into DB`);
+          });
         }
         console.log('DONE ADDING TO DATABASE');
         bigArray = null;
