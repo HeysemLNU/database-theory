@@ -1,11 +1,13 @@
 const mysql = require('mysql');
 const Lblr = require('line-by-line');
 
+
 // let importfiles = ['RC_2007-10.redditjson',
 // 'RC_2011-07.redditjson', 'RC_2012-12.redditjson'];
-const importfile = 'RC_2007-10.redditjson';
+const importfile = 'RC_2011-07.redditjson';
 let connection = '';
-const constrained = true;
+const constrained = false;
+
 
 const constrainedTablesQueries = [`CREATE TABLE IF NOT EXISTS subreddits (
   id VARCHAR(15) PRIMARY KEY,
@@ -47,7 +49,7 @@ const getConnection = () => {
     host: 'localhost',
     user: 'albert',
     password: 'password1',
-    insecureAuth: true,
+    insecureAuth: false,
   };
 
   if (constrained) {
@@ -80,32 +82,96 @@ const insertTables = (callback) => {
 
 const insertData = () => {
   const lineReader = new Lblr(importfile);
-  const comments = [];
-  const posts = new Set([]);
-  const subreddits = new Set([]);
+  lineReader.setMaxListeners(0);
+  let comments = [];
+  let posts = [];
+  let subreddits = [];
+  const postsSet = new Set();
+  const subredditsSet = new Set();
+
   let readLines = 0;
-  const maxReadLines = 500000;
+  const maxReadLines = 15000000;
 
+  const doInsert = (callback) => {
+    lineReader.pause();
+    // inputing the information we have into the database with bulk
+    const sql1 = `INSERT INTO subreddits(id, name) VALUES ?`;
+    const sql2 = `INSERT INTO posts (id, subr_id) VALUES ?`;
+    const sql3 = `INSERT INTO comments (id, parent_id, body, score
+      ,created_time, author, post_id)
+      VALUES ?`;
+
+
+    connection.query(sql1, [subreddits], (err) => {
+      if (err) {
+        console.log('subreddits: ' + err.sqlMessage);
+      }
+      console.log('ADDED BULK ENTRY TO SUBREDDITS TABLE');
+      connection.query(sql2, [posts], (err) => {
+        if (err) {
+          console.log('posts: ' +err.sqlMessage);
+        }
+        console.log('ADDED BULK ENTRY TO POSTS TABLE');
+        connection.query(sql3, [comments], (err) => {
+          if (err) {
+            console.log('comments: ' +err.sqlMessage);
+          }
+          console.log('ADDED BULK ENTRY TO COMMENTS TABLE');
+          console.log(comments.length);
+          console.log(subreddits.length);
+          console.log(posts.length);
+          readLines = 0;
+          comments = [];
+          posts = [];
+          subreddits = [];
+          callback();
+        });
+      });
+    });
+  };
+  const beforeMS = new Date().getTime();
   lineReader.on('line', (line) => {
-    if (readLines < maxReadLines) {
-      const lineObject = JSON.parse(line);
-      const currentComments = [lineObject.id, lineObject.parent_id, lineObject.body,
-        lineObject.score,
-        lineObject.created_utc, lineObject.author, lineObject.link_id];
-      const currentPosts = [lineObject.link_id, lineObject.subreddit_id];
-      const currentSubreddits = [lineObject.subreddit_id, lineObject.subreddit];
+    const lineObject = JSON.parse(line);
+    const currentComments = [lineObject.id, lineObject.parent_id, lineObject.body,
+      lineObject.score,
+      lineObject.created_utc, lineObject.author, lineObject.link_id];
+    const currentPosts = [lineObject.link_id, lineObject.subreddit_id];
+    const currentSubreddits = [lineObject.subreddit_id, lineObject.subreddit];
 
-      comments.push(currentComments);
-      posts.add(currentPosts);
-      subreddits.add(currentSubreddits);
-      readLines++;
+    comments.push(currentComments);
+
+    if (!postsSet.has(lineObject.link_id)) {
+      postsSet.add(lineObject.link_id);
+      posts.push(currentPosts);
     }
+
+    if (!subredditsSet.has(lineObject.subreddit_id)) {
+      subredditsSet.add(lineObject.subreddit_id);
+      subreddits.push(currentSubreddits);
+    }
+    /* posts.add(currentPosts, lineObject.link_id);
+      // subreddits.add(currentSubreddits);
+      subreddits.add(lineObject.subreddit_id, lineObject.subreddit); */
+    readLines++;
+    if (readLines >= maxReadLines) {
+      doInsert(() => {
+        lineReader.resume();
+      });
+    }
+  });
+  lineReader.on('end', () => {
+    doInsert(() => {
+      connection.end();
+      const totalTime = new Date().getTime() - beforeMS;
+      console.log(`THE TOTAL TIME IT TOOK THIS WAS ${totalTime}`);
+    });
   });
 };
 
 
 const start = () => {
   connection = getConnection();
+
   insertTables(insertData);
 };
 
