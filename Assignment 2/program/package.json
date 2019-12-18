@@ -12,6 +12,7 @@
   "author": "ab224hv, at222vk",
   "license": "UNLICENSED",
   "dependencies": {
+    "line-by-line": "^0.1.6",
     "mysql": "^2.17.1"
   },
   "devDependencies": {
