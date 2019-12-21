@@ -6,7 +6,7 @@ const Lblr = require('line-by-line');
 // 'RC_2011-07.redditjson', 'RC_2012-12.redditjson'];
 const importfile = 'RC_2011-07.redditjson';
 let connection = '';
-const constrained = false;
+const constrained = true;
 
 
 const constrainedTablesQueries = [`CREATE TABLE IF NOT EXISTS subreddits (
@@ -90,7 +90,7 @@ const insertData = () => {
   const subredditsSet = new Set();
 
   let readLines = 0;
-  const maxReadLines = 15000000;
+  const maxReadLines = 1000000;
 
   const doInsert = (callback) => {
     lineReader.pause();
