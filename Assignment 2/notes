@@ -1,0 +1,22 @@
+select count(author) from comments where author = 'tony28'; it's 110
+
+JOIN posts on comments.id = posts.id join subreddits on posts.subr_id = subreddits.id where `subreddits`.`name` = 'hugs';
+
+select count(comments.id) from comments join posts on comments.post_id = posts.id join subreddits on posts.subr_id = subreddits.id where subreddits.name = 'memes'; //11
+
+
+select count(comments.id) from comments where body like '% lol' or 'lol %' or '% lol %' or '% lol.' or '% lol.%' or 'lol %' or 'lol?%' or 'lol!%' 'lol,%'; // 9254
+
+Select distinct subreddits.name from subreddits join posts on subreddits.id = posts.subr_id join comments on posts.id = comments.post_id where author in (select author from comments where post_id = 't3_2u29i');
+
+create view scoreTable as select author,sum(score) as addedScores from comments group by author;
+select max(addedScores),min(addedScores) from scoreTable;
+
+111854 ms for second file
+18438 for first file
+
+
+select subreddits.name,max(comments.score),min(comments.score) from comments join posts on comments.post_id = posts.id join subreddits on posts.subr_id = subreddits.id group by subreddits.name; //we don't understand why this doesn't work and return nothing...
+
+
+since a single applicant can have an interview with a specific manager only once in a day, then we can use those 3 values to identify any interview time and room, which will be in the day entity set.
