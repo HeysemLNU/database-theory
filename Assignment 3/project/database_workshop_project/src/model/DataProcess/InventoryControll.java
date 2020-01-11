@@ -1,9 +1,9 @@
 package model.DataProcess;
 
-import model.inventory.Bars;
-import model.inventory.DoorHandles;
-import model.inventory.Wheels;
-import model.inventory.WindowHandles;
+import model.inventory.Bar;
+import model.inventory.DoorHandle;
+import model.inventory.Wheel;
+import model.inventory.WindowHandle;
 
 import java.util.ArrayList;
 import java.util.EmptyStackException;
@@ -15,15 +15,15 @@ public class InventoryControll {
     private  String wheelsID = "wheels";
     private  String whandlesID= "window";
     private  String dhandlesID = "door";
-    private  ArrayList<Bars> bars = new ArrayList<>();
-    private  ArrayList<Wheels> wheels = new ArrayList<>();
-    private  ArrayList<WindowHandles> whandles = new ArrayList<>();
-    private  ArrayList<DoorHandles> dhandles = new ArrayList<>();
+    private  ArrayList<Bar> bars = new ArrayList<>();
+    private  ArrayList<Wheel> wheels = new ArrayList<>();
+    private  ArrayList<WindowHandle> whandles = new ArrayList<>();
+    private  ArrayList<DoorHandle> dhandles = new ArrayList<>();
     public  InventoryControll (){}
 
 
-    public ArrayList<Bars> createBarsInventory (int amountOfBars, double inputLength,String inputColor, String inputStandard){
-        ArrayList<Bars> barsToAdd = new ArrayList<>();
+    public ArrayList<Bar> createBarsInventory (int amountOfBars, double inputLength, String inputColor, String inputStandard){
+        ArrayList<Bar> barsToAdd = new ArrayList<>();
 
 
 
