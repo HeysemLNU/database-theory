@@ -55,7 +55,7 @@ public class InventoryControll {
     public ArrayList<Bar> createBarsInventory (int amountOfBars, double inputLength, String inputColor, String
             inputStandard){
         ArrayList<Bar> barsToAdd = new ArrayList<>();
-
+        return  barsToAdd;
 
     }
 
