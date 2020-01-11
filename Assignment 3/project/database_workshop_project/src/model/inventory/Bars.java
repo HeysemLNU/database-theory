@@ -1,4 +1,4 @@
-package inventory;
+package model.inventory;
 
 public class Bars {
     private int id;
@@ -7,6 +7,10 @@ public class Bars {
     private  String standard;
 
     public Bars (int inputID, double inputLength,String inputColor, String inputStandard ){
+        setId(inputID);
+        setColor(inputColor);
+        setStandard(inputStandard);
+        setLength(inputLength);
     }
     public void setId(int inputID){
         id = inputID;
