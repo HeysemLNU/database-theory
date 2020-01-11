@@ -6,8 +6,6 @@ import java.sql.*;
 public class DatabaseOperations {
     // will start working on own branch to test communicaitons with sql database
     public DatabaseOperations() {
-
-
     }
 
     Connection conn;
@@ -21,6 +19,11 @@ public class DatabaseOperations {
         }
 
     }
+
+    public Bar fetchBar(int pos) {
+        //do fetch bar from db
+    }
+
 
 
 }
