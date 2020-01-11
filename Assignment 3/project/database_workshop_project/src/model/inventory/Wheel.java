@@ -1,17 +1,16 @@
 package model.inventory;
 
-public class WindowHandles {
-    private  int id;
-    private  String color;
-    private  String type; // This could also mean the material it is made out of
+public class Wheel {
+    private int id;
     private  String standard;
+    private  String color;
+    private int type;
 
-    public  WindowHandles( String inputType, String inputColor, String inputStandard, int inputID ){
-        setColor(inputColor);
+    public Wheel(int inputID, String inputColor, String inputStandard, int inputType ){
         setId(inputID);
+        setColor(inputColor);
         setStandard(inputStandard);
         setType(inputType);
-
     }
     public void setId(int inputID){
         id = inputID;
@@ -22,9 +21,10 @@ public class WindowHandles {
     public void  setStandard (String inputStandard){
         standard = inputStandard;
     }
-    public void  setType (String inputType){
+    public void  setType (int inputType){
         type = inputType;
     }
+
     public int getId() {
         return id;
     }
@@ -37,8 +37,7 @@ public class WindowHandles {
         return color;
     }
 
-    public String getType() {
+    public int getType() {
         return type;
     }
-
 }

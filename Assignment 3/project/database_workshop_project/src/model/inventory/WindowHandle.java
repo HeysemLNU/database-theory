@@ -1,18 +1,18 @@
 package model.inventory;
 
-public class DoorHandles {
+public class WindowHandle {
     private  int id;
     private  String color;
     private  String type; // This could also mean the material it is made out of
     private  String standard;
 
-    public DoorHandles(String inputType, String inputColor, String inputStandard, int inputID){
+    public WindowHandle(String inputType, String inputColor, String inputStandard, int inputID ){
         setColor(inputColor);
         setId(inputID);
         setStandard(inputStandard);
         setType(inputType);
-    }
 
+    }
     public void setId(int inputID){
         id = inputID;
     }
@@ -40,4 +40,5 @@ public class DoorHandles {
     public String getType() {
         return type;
     }
+
 }

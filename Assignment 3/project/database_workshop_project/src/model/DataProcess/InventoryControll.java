@@ -1,9 +1,9 @@
 package model.DataProcess;
 
-import model.inventory.Bars;
-import model.inventory.DoorHandles;
-import model.inventory.Wheels;
-import model.inventory.WindowHandles;
+import model.inventory.Bar;
+import model.inventory.DoorHandle;
+import model.inventory.Wheel;
+import model.inventory.WindowHandle;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -14,11 +14,12 @@ public class InventoryControll {
     private  String wheelsID = "wheels";
     private  String whandlesID= "window";
     private  String dhandlesID = "door";
-    private  ArrayList<Bars> bars = new ArrayList<>();
-    private  ArrayList<Wheels> wheels = new ArrayList<>();
-    private  ArrayList<WindowHandles> whandles = new ArrayList<>();
-    private  ArrayList<DoorHandles> dhandles = new ArrayList<>();
+    private  ArrayList<Bar> bars = new ArrayList<>();
+    private  ArrayList<Wheel> wheels = new ArrayList<>();
+    private  ArrayList<WindowHandle> whandles = new ArrayList<>();
+    private  ArrayList<DoorHandle> dhandles = new ArrayList<>();
     public  InventoryControll (){}
+
 
 
     public void addBarsInventory (int amountOfBars, double inputLength,String inputColor, String inputStandard){
@@ -44,6 +45,14 @@ public class InventoryControll {
             DoorHandles newDHandle = new DoorHandles(inputType,inputColor,inputStandard ,idGenerator(whandlesID));
             dhandles.add(newDHandle);
         }
+
+    public ArrayList<Bar> createBarsInventory (int amountOfBars, double inputLength, String inputColor, String inputStandard){
+        ArrayList<Bar> barsToAdd = new ArrayList<>();
+
+
+
+        return barsToAdd;
+
     }
 
 
