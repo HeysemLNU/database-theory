@@ -109,4 +109,7 @@ public class InventoryControll {
 
             throw new ArithmeticException("Could not Generate a random number !!");
     }
+    private void getArrays (Bars bars, Wheels wheels, WindowHandles windowHandles, DoorHandles doorHandles){
+        // Albert i need a function from you to fill in these arrays
+    }
 }
