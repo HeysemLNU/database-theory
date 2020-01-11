@@ -20,5 +20,6 @@ public class DatabaseOperations {
 
     public Bar fetchBar(int pos) {
         //do fetch bar from db
+
     }
 }

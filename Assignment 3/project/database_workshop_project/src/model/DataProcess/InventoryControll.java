@@ -6,7 +6,6 @@ import model.inventory.Wheels;
 import model.inventory.WindowHandles;
 
 import java.util.ArrayList;
-import java.util.EmptyStackException;
 import java.util.Random;
 
 public class InventoryControll {
@@ -22,15 +21,33 @@ public class InventoryControll {
     public  InventoryControll (){}
 
 
-    public ArrayList<Bars> createBarsInventory (int amountOfBars, double inputLength,String inputColor, String inputStandard){
-        ArrayList<Bars> barsToAdd = new ArrayList<>();
-
-
-
-        return barsToAdd;
+    public void addBarsInventory (int amountOfBars, double inputLength,String inputColor, String inputStandard){
+       for (int i = 0; i<amountOfBars; i++){
+           Bars newBar = new Bars(idGenerator(barID),inputLength,inputColor,inputStandard);
+           bars.add(newBar);
+       }
+    }
+    public void addWheelsInventory (int amountOfWheels, String inputColor, String inputStandard, int inputType ){
+        for (int i = 0; i<amountOfWheels; i++){
+            Wheels newWheel = new Wheels(idGenerator(wheelsID),inputColor,inputStandard,inputType);
+            wheels.add(newWheel);
+        }
+    }
+    public void addWHandlesInventory (int amountOfWHandles, String inputType, String inputColor, String inputStandard ){
+        for (int i = 0; i<amountOfWHandles; i++){
+            WindowHandles newWHandle = new WindowHandles(inputType,inputColor,inputStandard ,idGenerator(whandlesID));
+            whandles.add(newWHandle);
+        }
+    }
+    public void addDHandlesInventory (int amountOfDHandles, String inputType, String inputColor, String inputStandard ){
+        for (int i = 0; i<amountOfDHandles; i++){
+            DoorHandles newDHandle = new DoorHandles(inputType,inputColor,inputStandard ,idGenerator(whandlesID));
+            dhandles.add(newDHandle);
+        }
     }
 
-    public int idGenerator(String material){
+
+    private int idGenerator(String material){
         Random randomID = new Random(); // This might be outside the function i will see.
         if (material == barID){
             int generatedBarId = randomID.nextInt(99);
