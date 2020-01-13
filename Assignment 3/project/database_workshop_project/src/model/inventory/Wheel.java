@@ -1,43 +1,38 @@
 package model.inventory;
 
+import Enums.Color;
+import Enums.Standard;
+
 public class Wheel {
     private int id;
-    private  String standard;
-    private  String color;
-    private int type;
+    private Standard standard;
+    private Color color;
 
-    public Wheel(int inputID, String inputColor, String inputStandard, int inputType ){
+    public Wheel(int inputID, Color inputColor, Standard inputStandard){
         setId(inputID);
         setColor(inputColor);
         setStandard(inputStandard);
-        setType(inputType);
     }
     public void setId(int inputID){
         id = inputID;
     }
-    public void setColor (String inputColor){
-        color = inputColor;
+    public void setColor (Color inputColor){
+      color = inputColor;
     }
-    public void  setStandard (String inputStandard){
-        standard = inputStandard;
-    }
-    public void  setType (int inputType){
-        type = inputType;
+    public void  setStandard (Standard inputStandard){
+         standard = inputStandard;
     }
 
     public int getId() {
         return id;
     }
 
-    public String getStandard() {
+    public Standard getStandard() {
         return standard;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public int getType() {
-        return type;
-    }
 }
