@@ -1,9 +1,9 @@
-package model.DataProcess;
+package controller.DataProcess;
 
-import model.inventory.Bar;
-import model.inventory.DoorHandle;
-import model.inventory.Wheel;
-import model.inventory.WindowHandle;
+import Enums.Color;
+import Enums.Standard;
+import Enums.Type;
+import model.inventory.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -24,25 +24,26 @@ public class InventoryControll {
     }
 
 
-    public void addBarsInventory (int amountOfBars, double inputLength,String inputColor, String inputStandard){
+    public void addBarsInventory (int amountOfBars, double inputLength, Color inputColor, Standard inputStandard){
        for (int i = 0; i<amountOfBars; i++){
            Bar newBar = new Bar(idGenerator(barID),inputLength,inputColor,inputStandard);
            bars.add(newBar);
+           // or what ever function u give
        }
     }
-    public void addWheelsInventory (int amountOfWheels, String inputColor, String inputStandard, int inputType ){
+    public void addWheelsInventory (int amountOfWheels, Color inputColor, Standard inputStandard){
         for (int i = 0; i<amountOfWheels; i++){
-            Wheel newWheel = new Wheel(idGenerator(wheelsID),inputColor,inputStandard,inputType);
+            Wheel newWheel = new Wheel(idGenerator(wheelsID),inputColor,inputStandard);
             wheels.add(newWheel);
         }
     }
-    public void addWHandlesInventory (int amountOfWHandles, String inputType, String inputColor, String inputStandard ){
+    public void addWHandlesInventory (int amountOfWHandles, Type inputType, Color inputColor, Standard inputStandard ){
         for (int i = 0; i<amountOfWHandles; i++){
             WindowHandle newWHandle = new WindowHandle(inputType,inputColor,inputStandard ,idGenerator(whandlesID));
             whandles.add(newWHandle);
         }
     }
-    public void addDHandlesInventory (int amountOfDHandles, String inputType, String inputColor, String inputStandard ){
+    public void addDHandlesInventory (int amountOfDHandles, Type inputType, Color inputColor, Standard inputStandard ){
         for (int i = 0; i<amountOfDHandles; i++){
             DoorHandle newDHandle = new DoorHandle(inputType,inputColor,inputStandard ,idGenerator(whandlesID));
 
@@ -51,12 +52,12 @@ public class InventoryControll {
 
 
     }
-    public ArrayList<Bar> createBarsInventory (int amountOfBars, double inputLength, String inputColor, String
-            inputStandard){
+    /*
+    public ArrayList<Bar> createBarsInventory (int amountOfBars, double inputLength, String inputColor, String inputStandard){
         ArrayList<Bar> barsToAdd = new ArrayList<>();
         return  barsToAdd;
 
-    }
+    }*/
     private   void removeFromInvetoryBar(int idToRemove){
         // The user will input the id of the bar that he wants to remove from the table
     }
@@ -84,7 +85,7 @@ public class InventoryControll {
     }
 
 
-    public  void editBarMain (double inputLengthUsed,String inputColor, String inputStandard){
+    public  void editBarMain (double inputLengthUsed, Color inputColor, Standard inputStandard){
         for (int i=0; i<bars.size(); i++){
            if ((bars.get(i).getColor()==inputColor)&&(bars.get(i).getStandard()==inputStandard)){
                if (bars.get(i).getLength()>=inputLengthUsed){
