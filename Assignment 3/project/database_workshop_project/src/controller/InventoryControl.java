@@ -1,14 +1,15 @@
-package controller.DataProcess;
+package controller;
 
-import Enums.Color;
-import Enums.Standard;
-import Enums.Type;
-import model.inventory.*;
+import model.Bar;
+import model.DoorHandle;
+import model.Wheel;
+import model.Closure;
+
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class InventoryControll {
+public class InventoryControl {
 
     private  boolean idSetable = true;
     private String barID="bar";
@@ -17,35 +18,36 @@ public class InventoryControll {
     private  String dhandlesID = "door";
     private  ArrayList<Bar> bars = new ArrayList<>();
     private  ArrayList<Wheel> wheels = new ArrayList<>();
-    private  ArrayList<WindowHandle> whandles = new ArrayList<>();
+    private  ArrayList<Closure> whandles = new ArrayList<>();
     private  ArrayList<DoorHandle> dhandles = new ArrayList<>();
-    public  InventoryControll (){
+
+    public InventoryControl(){
 
     }
 
 
-    public void addBarsInventory (int amountOfBars, double inputLength, Color inputColor, Standard inputStandard){
+    public void addBarsInventory (int amountOfBars, double inputLength, Color inputColor, Series inputSeries, BarType inputBarType){
        for (int i = 0; i<amountOfBars; i++){
-           Bar newBar = new Bar(idGenerator(barID),inputLength,inputColor,inputStandard);
+           Bar newBar = new Bar(idGenerator(barID),inputLength,inputColor, inputSeries, inputBarType);
            bars.add(newBar);
            // or what ever function u give
        }
     }
-    public void addWheelsInventory (int amountOfWheels, Color inputColor, Standard inputStandard){
+    public void addWheelsInventory (int amountOfWheels, Color inputColor, Series inputSeries){
         for (int i = 0; i<amountOfWheels; i++){
-            Wheel newWheel = new Wheel(idGenerator(wheelsID),inputColor,inputStandard);
+            Wheel newWheel = new Wheel(idGenerator(wheelsID),inputColor, inputSeries);
             wheels.add(newWheel);
         }
     }
-    public void addWHandlesInventory (int amountOfWHandles, Type inputType, Color inputColor, Standard inputStandard ){
+    public void addWHandlesInventory (int amountOfWHandles, BarType inputBarType, Color inputColor, Series inputSeries){
         for (int i = 0; i<amountOfWHandles; i++){
-            WindowHandle newWHandle = new WindowHandle(inputType,inputColor,inputStandard ,idGenerator(whandlesID));
+            Closure newWHandle = new Closure(inputBarType,inputColor, inputSeries,idGenerator(whandlesID));
             whandles.add(newWHandle);
         }
     }
-    public void addDHandlesInventory (int amountOfDHandles, Type inputType, Color inputColor, Standard inputStandard ){
+    public void addDHandlesInventory (int amountOfDHandles, BarType inputBarType, Color inputColor, Series inputSeries){
         for (int i = 0; i<amountOfDHandles; i++){
-            DoorHandle newDHandle = new DoorHandle(inputType,inputColor,inputStandard ,idGenerator(whandlesID));
+            DoorHandle newDHandle = new DoorHandle(inputBarType,inputColor, inputSeries,idGenerator(whandlesID));
 
             dhandles.add(newDHandle);
         }
@@ -85,9 +87,9 @@ public class InventoryControll {
     }
 
 
-    public  void editBarMain (double inputLengthUsed, Color inputColor, Standard inputStandard){
+    public  void editBarMain (double inputLengthUsed, Color inputColor, Series inputSeries){
         for (int i=0; i<bars.size(); i++){
-           if ((bars.get(i).getColor()==inputColor)&&(bars.get(i).getStandard()==inputStandard)){
+           if ((bars.get(i).getColor()==inputColor)&&(bars.get(i).getSeries()== inputSeries)){
                if (bars.get(i).getLength()>=inputLengthUsed){
                    bars.get(i).setLength(bars.get(i).getLength()-inputLengthUsed);
                    if (bars.get(i).getLength()==0.0){
@@ -163,7 +165,7 @@ public class InventoryControll {
 
             throw new ArithmeticException("Could not Generate a random number !!");
         }
-        private void getArrays (Bar bars, Wheel wheels, WindowHandle windowHandles, DoorHandle doorHandles){
+        private void getArrays (Bar bars, Wheel wheels, Closure windowHandles, DoorHandle doorHandles){
             // Albert i need a function from you to fill in these arrays
         }
     }

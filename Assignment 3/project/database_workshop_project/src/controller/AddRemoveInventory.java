@@ -1,12 +1,9 @@
-package controller.DataProcess;
+package controller;
 
-import Enums.Color;
-import Enums.Standard;
-import Enums.Type;
-import model.inventory.Bar;
-import model.inventory.DoorHandle;
-import model.inventory.Wheel;
-import model.inventory.WindowHandle;
+import model.Bar;
+import model.DoorHandle;
+import model.Wheel;
+import model.Closure;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -19,7 +16,7 @@ public class AddRemoveInventory {
     private  String dhandlesID = "door";
     private  ArrayList<Bar> bars = new ArrayList<>();
     private  ArrayList<Wheel> wheels = new ArrayList<>();
-    private  ArrayList<WindowHandle> whandles = new ArrayList<>();
+    private  ArrayList<Closure> whandles = new ArrayList<>();
     private  ArrayList<DoorHandle> dhandles = new ArrayList<>();
 
     public ArrayList<Bar> addBarsInventory (int amountOfBars, double inputLength, int inputColor, int inputStandard){
@@ -43,12 +40,12 @@ public class AddRemoveInventory {
         }
         return returnWheel;
     }
-    public ArrayList<WindowHandle> addWHandlesInventory (int amountOfWHandles, int inputType, int inputColor, int inputStandard){
-        ArrayList<WindowHandle> returnWHandles = new ArrayList();
+    public ArrayList<Closure> addWHandlesInventory (int amountOfWHandles, int inputType, int inputColor, int inputStandard){
+        ArrayList<Closure> returnWHandles = new ArrayList();
 
 
         for (int i = 0; i<amountOfWHandles; i++){
-            WindowHandle newWHandle = new WindowHandle(assighnTypeSwitch(inputType),assighnColorSwitch(inputColor),assighnStandardSwitch(inputStandard) ,idGenerator(whandlesID));
+            Closure newWHandle = new Closure(assighnTypeSwitch(inputType),assighnColorSwitch(inputColor),assighnStandardSwitch(inputStandard) ,idGenerator(whandlesID));
             returnWHandles.add(newWHandle);
         }
         return returnWHandles;
@@ -84,14 +81,14 @@ public Color assighnColorSwitch(int chosen){
         }
         return output2;
     }
-    public    Standard assighnStandardSwitch(int chosen){
-        Standard stan;
+    public Series assighnStandardSwitch(int chosen){
+        Series stan;
         switch (chosen){
-            case 1: stan = Standard.STANDARD_v94;
+            case 1: stan = Series.STANDARD_v94;
                 break;
-            case 2: stan =Standard.STANDARD_2300 ;
+            case 2: stan = Series.STANDARD_2300 ;
                 break;
-            case 3: stan = Standard.STANDARD_2500;
+            case 3: stan = Series.STANDARD_2500;
                 break;
 
             default:
@@ -99,17 +96,17 @@ public Color assighnColorSwitch(int chosen){
         }
         return  stan;
     }
-    public Type  assighnTypeSwitch(int chosen){
-        Type outType;
+    public BarType assighnTypeSwitch(int chosen){
+        BarType outBarType;
         switch (chosen){
-            case 1: outType = Type.HANDGRIP;
+            case 1: outBarType = BarType.HANDGRIP;
                 break;
-            case 2: outType = Type.HANDLE ;
+            case 2: outBarType = BarType.HANDLE ;
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + chosen);
         }
-        return outType;
+        return outBarType;
     }
     private int idGenerator (String material){
         Random randomID = new Random(); //This might be outside the function i will see.

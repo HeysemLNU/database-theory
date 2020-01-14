@@ -1,19 +1,21 @@
-package model.inventory;
+package model;
 
-import Enums.Color;
-import Enums.Standard;
+import controller.Color;
+import controller.Series;
+import controller.BarType;
 
 public class Bar {
 
     private int id;
     private double length;
     private Color color;
-    private Standard standard;
+    private Series series;
+    private BarType barType;
 
-    public Bar(int inputID, double inputLength, Color inputColor, Standard inputStandard ){
+    public Bar(int inputID, double inputLength, Color inputColor, Series inputSeries, BarType inputBarType){
         setId(inputID);
         setColor(inputColor);
-        setStandard(inputStandard);
+        setSeries(inputSeries);
         setLength(inputLength);
     }
     public void setId(int inputID){
@@ -36,7 +38,7 @@ public class Bar {
         }*/
         color = inputColor;
     }
-    public void  setStandard (Standard inputStandard){
+    public void setSeries(Series inputSeries){
         /*
         switch (inputStandard){
             case 1: standard = Standard.STANDARD_v94;
@@ -47,7 +49,7 @@ public class Bar {
                 break;
 
         }*/
-        standard = inputStandard;
+        series = inputSeries;
     }
     public int getId (){
         return id;
@@ -61,7 +63,7 @@ public class Bar {
         return color;
     }
 
-    public Standard getStandard() {
-        return standard;
+    public Series getSeries() {
+        return series;
     }
 }

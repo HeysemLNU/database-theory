@@ -1,6 +1,6 @@
 package controller;
 
-import model.inventory.Bar;
+import model.Bar;
 
 import java.sql.*;
 
@@ -18,9 +18,9 @@ public class DatabaseOperations {
         Statement st = conn.createStatement();
         String query = "create table if not exists bars"
                 + "(" +
-                "id INT, inputlength DECIMAL, color VARCHAR(30), series VARCHAR(30)" +
+                "id INT, inputlength DECIMAL, color VARCHAR(30), series VARCHAR(30), barType VARCHAR(30)" +
                 ")";
-        String query2 = "create table if not exists doorhandles" +
+        String query2 = "create table if not exists closures" +
                 "(" +
                 "id INT, color VARCHAR(30), style VARCHAR(30), series VARCHAR(30)" +
                 ")";
