@@ -26,9 +26,6 @@ public class AddRemoveInventory {
 
         ArrayList<Bar> returnBar = new ArrayList();
 
-        //assighnColorSwitch(inputColor,toAddColor);
-        //assighnStandardSwitch(inputStandard,toAddStandard);
-
         for (int i = 0; i<amountOfBars; i++){
             Bar newBar = new Bar(idGenerator(barID),inputLength,  assighnColorSwitch(inputColor),assighnStandardSwitch(inputStandard));
             returnBar.add(newBar);
@@ -40,9 +37,6 @@ public class AddRemoveInventory {
 
         ArrayList<Wheel> returnWheel = new ArrayList();
 
-        //assighnColorSwitch(inputColor,toAddColor);
-        //assighnStandardSwitch(inputStandard,toAddStandard);
-
         for (int i = 0; i<amountOfWheels; i++){
             Wheel newWheel = new Wheel(idGenerator(wheelsID),assighnColorSwitch(inputColor),assighnStandardSwitch(inputStandard));
             returnWheel.add(newWheel);
@@ -51,10 +45,6 @@ public class AddRemoveInventory {
     }
     public ArrayList<WindowHandle> addWHandlesInventory (int amountOfWHandles, int inputType, int inputColor, int inputStandard){
         ArrayList<WindowHandle> returnWHandles = new ArrayList();
-
-       // assighnColorSwitch(inputColor,toAddColor);
-        //assighnStandardSwitch(inputStandard,toAddStandard);
-        //assighnTypeSwitch(inputType, toAddType);
 
 
         for (int i = 0; i<amountOfWHandles; i++){
@@ -66,11 +56,6 @@ public class AddRemoveInventory {
     public ArrayList<DoorHandle> addDHandlesInventory (int amountOfDHandles, int inputType, int inputColor, int inputStandard){
 
         ArrayList<DoorHandle> returnDHandles = new ArrayList();
-
-        //assighnColorSwitch(inputColor,toAddColor);
-        //assighnStandardSwitch(inputStandard,toAddStandard);
-        //assighnTypeSwitch(inputType, toAddType);
-
 
         for (int i = 0; i<amountOfDHandles; i++){
             DoorHandle newDHandle = new DoorHandle(assighnTypeSwitch(inputType),assighnColorSwitch(inputColor),assighnStandardSwitch(inputStandard) ,idGenerator(dhandlesID));
