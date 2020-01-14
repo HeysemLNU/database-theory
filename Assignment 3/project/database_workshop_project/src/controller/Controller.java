@@ -2,7 +2,7 @@ package controller;
 
 import java.sql.Connection;
 
-public class Controller {
+public class Controller {/*
     DatabaseOperations database = new DatabaseOperations();
     public Controller() {
         try {
@@ -12,5 +12,5 @@ public class Controller {
         }
 
     }
-
+*/
 }
