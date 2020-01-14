@@ -1,12 +1,16 @@
 package model.inventory;
 
+import Enums.Color;
+import Enums.Standard;
+import Enums.Type;
+
 public class DoorHandle {
     private  int id;
-    private  String color;
-    private  String type; // This could also mean the material it is made out of
-    private  String standard;
+    private Color color;
+    private Type type; // This could also mean the material it is made out of
+    private Standard standard;
 
-    public DoorHandle(String inputType, String inputColor, String inputStandard, int inputID){
+    public DoorHandle(Type inputType, Color inputColor, Standard inputStandard, int inputID){
         setColor(inputColor);
         setId(inputID);
         setStandard(inputStandard);
@@ -16,28 +20,28 @@ public class DoorHandle {
     public void setId(int inputID){
         id = inputID;
     }
-    public void setColor (String inputColor){
+    public void setColor (Color inputColor){
         color = inputColor;
     }
-    public void  setStandard (String inputStandard){
+    public void  setStandard (Standard inputStandard){
         standard = inputStandard;
     }
-    public void  setType (String inputType){
+    public void  setType (Type inputType){
         type = inputType;
     }
     public int getId() {
         return id;
     }
 
-    public String getStandard() {
+    public Standard getStandard() {
         return standard;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public String getType() {
+    public Type getType() {
         return type;
     }
 }
