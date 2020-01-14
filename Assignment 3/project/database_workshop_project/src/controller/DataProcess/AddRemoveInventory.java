@@ -11,7 +11,7 @@ import model.inventory.WindowHandle;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class AddInventory {
+public class AddRemoveInventory {
     private  boolean idSetable = true;
     private String barID="bar";
     private  String wheelsID = "wheels";
@@ -78,7 +78,7 @@ public class AddInventory {
         }
         return returnDHandles;
     }
-private Color assighnColorSwitch(int chosen){
+public Color assighnColorSwitch(int chosen){
         System.out.println("Entered Here");
         Color output2;
         switch (chosen){
@@ -99,7 +99,7 @@ private Color assighnColorSwitch(int chosen){
         }
         return output2;
     }
-    private   Standard assighnStandardSwitch(int chosen){
+    public    Standard assighnStandardSwitch(int chosen){
         Standard stan;
         switch (chosen){
             case 1: stan = Standard.STANDARD_v94;
@@ -114,7 +114,7 @@ private Color assighnColorSwitch(int chosen){
         }
         return  stan;
     }
-    private Type  assighnTypeSwitch(int chosen){
+    public Type  assighnTypeSwitch(int chosen){
         Type outType;
         switch (chosen){
             case 1: outType = Type.HANDGRIP;

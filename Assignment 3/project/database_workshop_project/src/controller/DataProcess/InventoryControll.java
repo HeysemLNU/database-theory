@@ -2,11 +2,9 @@ package controller.DataProcess;
 
 import Enums.Color;
 import Enums.Standard;
-import Enums.Type;
 import model.inventory.*;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class InventoryControll {
 
@@ -14,12 +12,12 @@ public class InventoryControll {
     private  ArrayList<Wheel> wheels = new ArrayList<>();
     private  ArrayList<WindowHandle> whandles = new ArrayList<>();
     private  ArrayList<DoorHandle> dhandles = new ArrayList<>();
-    AddInventory functionsToAdd = new AddInventory();
+    AddRemoveInventory functionsToAdd = new AddRemoveInventory();
     public  InventoryControll (){}
 
 
     public ArrayList<Bar> addInArraysBars (int amountOfBars, double inputLength, int inputColor, int inputStandard){
-        // Your function handles the array bellow.
+        // Your function handles the array bellow. I will make this a void
        return functionsToAdd.addBarsInventory(amountOfBars,inputLength,inputColor,inputStandard);
     }
     public ArrayList<Wheel>  addInArrayWheels (int amountOfWheels, int inputColor, int inputStandard){
@@ -58,9 +56,9 @@ public class InventoryControll {
     }
 
 
-    public  void editBarMain (double inputLengthUsed, Color inputColor, Standard inputStandard){
+    public  void editBarMain (double inputLengthUsed, int inputColor, int inputStandard){
         for (int i=0; i<bars.size(); i++){
-           if ((bars.get(i).getColor()==inputColor)&&(bars.get(i).getStandard()==inputStandard)){
+           if ((bars.get(i).getColor()==functionsToAdd.assighnColorSwitch(inputColor))&&(bars.get(i).getStandard()==functionsToAdd.assighnStandardSwitch(inputStandard))){
                if (bars.get(i).getLength()>=inputLengthUsed){
                    bars.get(i).setLength(bars.get(i).getLength()-inputLengthUsed);
                    if (bars.get(i).getLength()==0.0){
@@ -76,8 +74,5 @@ public class InventoryControll {
 
     }
 
-        private void getArrays (Bar bars, Wheel wheels, WindowHandle windowHandles, DoorHandle doorHandles){
-            // Albert i need a function from you to fill in these arrays
-        }
     }
 
