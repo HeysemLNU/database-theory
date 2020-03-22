@@ -25,7 +25,7 @@ public class Controller {
                 "Nationality varchar(50)," +
                 "Name varchar(50)," +
                 "PRIMARY KEY (ArtistID))");
-2
+
         st.executeUpdate("CREATE TABLE IF NOT EXISTS Albums " +
                 "(AlbumID int NOT NULL AUTO_INCREMENT," +
                 "Artist int," +
@@ -51,12 +51,12 @@ public class Controller {
 
     }
 
-
+/*
     public void addToArtists(String name,) {
 
     }
 
-    private enum
+    private enum*/
 
 
 
