@@ -10,6 +10,8 @@ public class Controller {
 
     }
 
+
+
     public void initDB(ConnectionParams params) throws SQLException {
         Connection con = DriverManager.getConnection(
                 params.getNoCreds(), params.getUsername(), params.getPassword());
@@ -23,8 +25,7 @@ public class Controller {
                 "Nationality varchar(50)," +
                 "Name varchar(50)," +
                 "PRIMARY KEY (ArtistID))");
-        System.out.println("this is here now");
-        //finish the ttable creation entry
+2
         st.executeUpdate("CREATE TABLE IF NOT EXISTS Albums " +
                 "(AlbumID int NOT NULL AUTO_INCREMENT," +
                 "Artist int," +
@@ -33,7 +34,7 @@ public class Controller {
                 "RecordLabel varchar(100)," +
                 "FOREIGN KEY(Artist) REFERENCES Artists(ArtistID)," +
                 "PRIMARY KEY (AlbumID))");
-        System.out.println("this is here now again");
+
         st.executeUpdate("CREATE TABLE IF NOT EXISTS Songs " +
                 "(SongID int NOT NULL AUTO_INCREMENT," +
                 "Length int," +
@@ -49,6 +50,14 @@ public class Controller {
 
 
     }
+
+
+    public void addToArtists(String name,) {
+
+    }
+
+    private enum
+
 
 
 }
