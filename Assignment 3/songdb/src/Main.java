@@ -12,8 +12,8 @@ public class Main {
         Controller con = new Controller();
         ConnectionParams cp = new ConnectionParams("desktop.noxel.tk",42069,"database", "animewaifu","songs");
         try {
-            con.initDB(cp);
-        } catch (SQLException e){
+            con.startView();
+        } catch (Exception e){
             System.out.println("error " + e.getMessage());
         }
 

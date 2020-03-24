@@ -1,6 +1,7 @@
 package controller;
 
 import model.*;
+import view.EnglishView;
 
 import java.sql.*;
 
@@ -10,7 +11,10 @@ public class Controller {
 
     }
 
-
+    public void startView () {
+        EnglishView ev = new EnglishView();
+        ev.getCC("sweden");
+    }
 
     public void initDB(ConnectionParams params) throws SQLException {
         Connection con = DriverManager.getConnection(
@@ -25,7 +29,7 @@ public class Controller {
                 "Nationality varchar(50)," +
                 "Name varchar(50)," +
                 "PRIMARY KEY (ArtistID))");
-2
+
         st.executeUpdate("CREATE TABLE IF NOT EXISTS Albums " +
                 "(AlbumID int NOT NULL AUTO_INCREMENT," +
                 "Artist int," +
@@ -52,11 +56,9 @@ public class Controller {
     }
 
 
-    public void addToArtists(String name,) {
+    /*public void addToArtists(String name,) {
 
-    }
-
-    private enum
+    }*/
 
 
 
