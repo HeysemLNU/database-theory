@@ -1,30 +1,22 @@
-package model.Variables;
+package model.dbElements;
 
-
-public class Song {
-    private int length;
-    private String name;
-    private String lyricks; // discuss this
-    private int year;
-    private  int artistID;
+public class Album {
     private int albumID;
+    private int artistID;
+    private String name;
+    private  int year;
+    private String recordLabel;
 
-    public Song (int inputLength, String inputName,int inputYear, int inputArtistID,int inputAlbumID ){
-        setLength(inputLength);
+    public Album (String inputName,int inputYear, int inputArtistID,int inputAlbumID, String inputRecordLabel){
         setName(inputName);
         setYear(inputYear);
         setArtistID(inputArtistID);
         setAlbumID(inputAlbumID);
+        setRecordLabel(inputRecordLabel);
     }
 
-    public void  setLength (int setLeangth){
-        length =setLeangth;
-    }
     public void  setName (String setName){
         name =setName;
-    }
-    public void  setLyricks (String setLyricks){
-        lyricks =setLyricks;
     }
     public void  setYear (int setYear){
         year =setYear;
@@ -35,10 +27,12 @@ public class Song {
     public void  setAlbumID (int setAlbumID){
         albumID =setAlbumID;
     }
-    public int getLength(){return length;}
+    public void setRecordLabel(String setRecordLabel){
+        recordLabel= setRecordLabel;
+    }
     public String getName(){return name;}
-    public String getLyricks (){return lyricks;}
     public int getYear (){return year;}
     public int getArtistID(){return artistID;}
     public int getAlbumID () {return  albumID;}
+    public String getRecordLabel(){return recordLabel;}
 }

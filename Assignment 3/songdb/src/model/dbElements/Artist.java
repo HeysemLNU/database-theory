@@ -1,4 +1,4 @@
-package model.Variables;
+package model.dbElements;
 
 import model.CountryCode;
 
