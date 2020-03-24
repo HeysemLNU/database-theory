@@ -4,7 +4,7 @@ import model.*;
 
 public interface ViewTemplate {
 
-    CountryCode getCC(String countryName);
+    CountryCode getCC();
 
 
 }

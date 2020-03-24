@@ -13,7 +13,7 @@ public class Controller {
 
     public void startView () {
         EnglishView ev = new EnglishView();
-        ev.getCC("sweden");
+        ev.getCC();
     }
 
     public void initDB(ConnectionParams params) throws SQLException {

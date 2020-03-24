@@ -1,8 +1,6 @@
 import controller.*;
 import model.ConnectionParams;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 
 
 public class Main {

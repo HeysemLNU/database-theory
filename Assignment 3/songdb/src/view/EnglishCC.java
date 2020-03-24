@@ -1,19 +1,21 @@
 package view;
 
+
+import com.google.common.collect.HashBiMap;
+
 import model.CountryCode;
 
-import java.util.Collection;
-import java.util.HashMap;
+
 import java.util.Iterator;
-import java.util.Set;
 
 
 public class EnglishCC {
 
-    private BidiMap<CountryCode,String> countryMap = new HashMap();
+    private HashBiMap<CountryCode,String> countryMap = HashBiMap.create();
 
     public EnglishCC () {
-        initHashMap();
+        System.out.println("before initialising the map");
+        initMap();
     }
 
     private String[] countriesletter = {"AF","AX","AL","DZ","AS","AD","AO","AI","AQ","AG","AR","AM","AW","AU","AT","AZ","BS","BH","BD","BB","BY","BE","BZ","BJ","BM","BT","BO","BQ","BA","BW","BV","BR","IO","VG","BN","BG","BF","BI","KH","CM","CA","CV","KY","CF","TD","CL","CN","CX","CC","CO","KM","CK","CR","HR","CU","CW","CY","CZ","CD","DK","DJ","DM","DO","TL","EC","EG","SV","GQ","ER","EE","ET","FK","FO","FJ","FI","FR","GF","PF","TF","GA","GM","GE","DE","GH","GI","GR","GL","GD","GP","GU","GT","GG","GN","GW","GY","HT","HM","HN","HK","HU","IS","IN","ID","IR","IQ","IE","IM","IL","IT","CI","JM","JP","JE","JO","KZ","KE","KI","XK","KW","KG","LA","LV","LB","LS","LR","LY","LI","LT","LU","MO","MK","MG","MW","MY","MV","ML","MT","MH","MQ","MR","MU","YT","MX","FM","MD","MC","MN","ME","MS","MA","MZ","MM","NA","NR","NP","NL","AN","NC","NZ","NI","NE","NG","NU","NF","KP","MP","NO","OM","PK","PW","PS","PA","PG","PY","PE","PH","PN","PL","PT","PR","QA","CG","RE","RO","RU","RW","BL","SH","KN","LC","MF","PM","VC","WS","SM","ST","SA","SN","RS","CS","SC","SL","SG","SX","SK","SI","SB","SO","ZA","GS","KR","SS","ES","LK","SD","SR","SJ","SZ","SE","CH","SY","TW","TJ","TZ","TH","TG","TK","TO","TT","TN","TR","TM","TC","TV","VI","UG","UA","AE","GB","US","UM","UY","UZ","VU","VA","VE","VN","WF","EH","YE","ZM","ZW"};
@@ -27,7 +29,8 @@ public class EnglishCC {
 
 
 
-    private void initHashMap() {
+    private void initMap() {
+        System.out.println("inside the initmap function");
         for(int counter=0; counter < countriesletter.length; counter++) {
             countryMap.put(CountryCode.valueOf(countriesletter[counter]), countriestext[counter]);
         }
@@ -45,13 +48,23 @@ public class EnglishCC {
             if(foundCC != null) {
                 //returns the country code
                 return match;
-            } else {
-                return null;
             }
 
+        } else if(filtered.equals("UNKNOWN")) {
+            //means the country is unknown
+            return CountryCode.UNKNOWN;
+        } else {
+            //then it checks against all the values possible
+            Iterator<String> values = countryMap.values().iterator();
+
+            while (values.hasNext()) {
+                String currentValue = values.next();
+                if(filtered.equals(normalise(currentValue))) {
+                    return countryMap.inverse().get(currentValue);
+                }
+            }
         }
-
-
+        return null;
 
        /* Iterator<CountryCode> iteratorKeys = countryMap.keySet().iterator();
         int counter =0;
@@ -68,9 +81,9 @@ public class EnglishCC {
 
 
     public String normalise(String input) {
-        String allLow = input.toUpperCase();
+        String allHigh = input.toUpperCase();
         //replaces numbers and spaces by nothing
-        return allLow.replaceAll("[^a-z]","");
+        return allHigh.replaceAll("[^A-Z]","");
     }
 
 
