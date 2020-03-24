@@ -66,6 +66,7 @@ public class EnglishCC {
                     return countryMap.inverse().get(currentValue);
                 }
             }
+
         }
         return null;
 
@@ -79,6 +80,7 @@ public class EnglishCC {
         System.out.println("Number of elements in the hashmap: " +counter);
         System.out.println("Number of elements in countriesletter: " + countriesletter.length);
         return null;*/
+
     }
 
 

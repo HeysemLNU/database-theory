@@ -57,5 +57,6 @@ public class EnglishView implements ViewTemplate {
     @Override
     public void mainMenu() {
 
+
     }
 }
