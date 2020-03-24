@@ -14,7 +14,11 @@ public class Controller {
     public void startView () {
         EnglishView ev = new EnglishView();
         ev.getCC();
+
     }
+
+
+
 
     public void initDB(ConnectionParams params) throws SQLException {
         Connection con = DriverManager.getConnection(

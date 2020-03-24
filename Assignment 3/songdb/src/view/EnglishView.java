@@ -6,6 +6,28 @@ import java.util.Scanner;
 
 public class EnglishView implements ViewTemplate {
 
+
+    //Add artist
+    //add song
+    //add album
+    //edit artist
+    //edit song
+    //edit album
+    //remove artist
+    //remove song
+    //remove album
+    //show table artist
+    //show table song
+    //show table album
+    //search by song name
+    //search by artist name
+    //search by album by year
+    //search song by year
+    //order songs by length min-max and max-min
+    //order songs by year min-max and max-min
+    //show song table join artist table
+    //show artist table join with album table
+    //search song by name with join artist table and album table
     public EnglishView() {
 
     }
@@ -30,5 +52,10 @@ public class EnglishView implements ViewTemplate {
         }
 
         return null;
+    }
+
+    @Override
+    public void mainMenu() {
+
     }
 }
