@@ -7,7 +7,9 @@ import model.dbElements.Artist;
 import model.dbElements.Song;
 
 import java.sql.*;
+import java.util.ArrayList;
 
+@SuppressWarnings("Duplicates")
 public class EditDB {
     ConnectionParams params;
     public EditDB (ConnectionParams paramsDB){
@@ -115,5 +117,62 @@ public class EditDB {
         Song returnSong = new Song(length,name,year,artistID,albumID,lyrics);
         returnSong.setSongID(id);
         return returnSong;
+    }
+    public ArrayList<Song> getAllSongDB (String typeInfo, String info) throws SQLException {
+        int albumID = 0; int artistID = 0; String name = null; int year = 0; int length = 0; String lyrics = null;
+        ArrayList <Song> allSongs = new ArrayList<>();
+        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Songs WHERE "+typeInfo+" = "+info;
+        ResultSet resultSet = getDb.executeQuery(sqlComand);
+        while (resultSet.next()){
+            artistID = resultSet.getInt("Artist");
+            name = resultSet.getString("Name");
+            year = resultSet.getInt("Year");
+            albumID = resultSet.getInt("Album");
+            length = resultSet.getInt("Length");
+            lyrics = resultSet.getString("Lyrics");
+            Song returnSong = new Song(length,name,year,artistID,albumID,lyrics);
+            returnSong.setSongID(resultSet.getInt("SongID"));
+            allSongs.add(returnSong);
+        }
+        con.close();
+        return allSongs;
+    }
+    public ArrayList<Album> getAllAlbumDB (String typeInfo, String info) throws SQLException {
+        int artistID = 0; String name = null; int year = 0; String recordLabel = null;
+        ArrayList <Album> allAlbums = new ArrayList<>();
+        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Albums WHERE "+typeInfo+" = "+info;
+        ResultSet resultSet = getDb.executeQuery(sqlComand);
+        while (resultSet.next()){
+            artistID = resultSet.getInt("Artist");
+            name = resultSet.getString("Name");
+            year = resultSet.getInt("Year");
+            recordLabel = resultSet.getString("RecordLabel");
+            Album returnAlbum = new Album(name,year,artistID,recordLabel);
+            returnAlbum.setAlbumID(resultSet.getInt("AlbumID"));
+            allAlbums.add(returnAlbum);
+        }
+        con.close();
+        return allAlbums;
+    }
+    public ArrayList<Artist> getAllArtistDB (String typeInfo, String info) throws SQLException {
+        String name = null; String countryCode = null;
+        ArrayList <Artist> allArtists = new ArrayList<>();
+        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Artists WHERE "+typeInfo+" = "+info;
+        ResultSet resultSet = getDb.executeQuery(sqlComand);
+        while (resultSet.next()){
+            name = resultSet.getString("Name");
+            countryCode = resultSet.getString("Nationality");
+            Artist returnArtist = new Artist(name, CountryCode.valueOf(countryCode));
+            returnArtist.setId(resultSet.getInt("ArtistID"));
+            allArtists.add(returnArtist);
+        }
+        con.close();
+        return allArtists;
     }
 }

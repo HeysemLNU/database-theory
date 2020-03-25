@@ -10,7 +10,6 @@ public class Main {
         Controller con = new Controller();
         ConnectionParams cp = new ConnectionParams("desktop.noxel.tk",42069,"database", "animewaifu","songs");
 
-
         try {
             con.startView();
         } catch (Exception e){
