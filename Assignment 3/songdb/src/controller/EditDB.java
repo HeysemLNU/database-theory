@@ -98,7 +98,7 @@ public class EditDB {
         returnAlbum.setAlbumID(id);
         return returnAlbum;
     }
-    public Song getSongDBB (int id) throws SQLException {
+    public Song getSongDB (int id) throws SQLException {
         int albumID = 0; int artistID = 0; String name = null; int year = 0; int length = 0; String lyrics = null;
         Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
         Statement getDb = con.createStatement();
