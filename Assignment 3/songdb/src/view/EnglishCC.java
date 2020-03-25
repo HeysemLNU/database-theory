@@ -21,19 +21,12 @@ public class EnglishCC {
 
 
     public EnglishCC () {
-        System.out.println("before initialising the map");
         initMap();
     }
 
 
 
-
-
-
-
-
     private void initMap() {
-        System.out.println("inside the initmap function");
         for(int counter=0; counter < countriesletter.length; counter++) {
             countryMap.put(CountryCode.valueOf(countriesletter[counter]), countriestext[counter]);
         }
@@ -70,16 +63,7 @@ public class EnglishCC {
         }
         return null;
 
-       /* Iterator<CountryCode> iteratorKeys = countryMap.keySet().iterator();
-        int counter =0;
-        while(iteratorKeys.hasNext()) {
-            CountryCode currentKey = iteratorKeys.next();
-            System.out.println(currentKey.toString() +"," + countryMap.get(currentKey));
-            counter++;
-        }
-        System.out.println("Number of elements in the hashmap: " +counter);
-        System.out.println("Number of elements in countriesletter: " + countriesletter.length);
-        return null;*/
+
 
     }
 
@@ -90,6 +74,7 @@ public class EnglishCC {
         //replaces numbers and spaces by nothing
         return allHigh.replaceAll("[^A-Z]","");
     }
+
 
 
 }

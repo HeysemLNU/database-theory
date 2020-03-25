@@ -6,6 +6,14 @@ public interface ViewTemplate {
 
     CountryCode getCC();
 
-    void mainMenu();
+    SelectedOption mainMenu();
+
+    enum SelectedOption {
+        DEFAULT, ADDARTIST, REMOVEARTIST, EDITARTIST, ADDSONG,
+        REMOVESONG, EDITSONG, ADDALBUM, REMOVEALBUM, EDITALBUM,
+        EXIT;
+    }
+
+
 
 }
