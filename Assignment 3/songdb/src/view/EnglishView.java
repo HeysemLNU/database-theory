@@ -6,10 +6,6 @@ import model.CountryCode;
 import model.dbElements.Album;
 import model.dbElements.Artist;
 import model.dbElements.Song;
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class EnglishView implements ViewTemplate {

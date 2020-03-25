@@ -14,6 +14,9 @@ public interface ViewTemplate {
         EXIT;
     }
 
+    enum Errors {
+        DBERROR,
+    }
 
 
 }

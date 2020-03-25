@@ -3,22 +3,24 @@ package controller;
 import model.*;
 import model.dbElements.*;
 import view.EnglishView;
+import view.ViewTemplate;
 
 import java.sql.*;
 
 public class Controller {
-    ConnectionParams params = null;
-
+    ConnectionParams params;
+    EditDB databaseFunctions;
     EnglishView ev = new EnglishView();
 
     public Controller(ConnectionParams par) {
         this.params = par;
+        databaseFunctions = new EditDB(params);
     }
 
-    public void startView () {
+    public void startView() {
         boolean keepRunning = true;
         ev.welcomeMessage();
-        while(keepRunning) {
+        while (keepRunning) {
             EnglishView.SelectedOption so = ev.mainMenu();
             switch (so) {
                 case ADDARTIST: {
@@ -72,12 +74,17 @@ public class Controller {
     }
 
 
-
     private void addArtist() {
-        Artist a = ev.addNewArtist();
-        if(a == null) {
+        Artist artist = ev.addNewArtist();
+        if (artist == null) {
             ev.abort();
         } else {
+            try{
+                databaseFunctions.addNewArtist(artist);
+            } catch (SQLException ex) {
+
+            }
+
             //call the database to add the new artist
         }
 
@@ -87,66 +94,29 @@ public class Controller {
 
     }
 
-    private void editArtist() {}
+    private void editArtist() {
+    }
 
     private void addAlbum() {
         Album al = ev.addNewAlbum();
     }
 
-    private void removeAlbum() {}
+    private void removeAlbum() {
+    }
 
-    private void editAlbum() {}
+    private void editAlbum() {
+    }
 
-    private void addSong() {}
-    private void removeSong() {}
-    private void editSong() {}
+    private void addSong() {
+    }
 
+    private void removeSong() {
+    }
 
-
-
-
-    public void initDB() throws SQLException {
-        Connection con = DriverManager.getConnection(
-                params.getNoCreds(), params.getUsername(), params.getPassword());
-
-        Statement st = con.createStatement();
-
-        st.executeUpdate("DROP TABLE IF EXISTS Songs,Artists,Albums");
-
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS Artists " +
-                "(ArtistID int NOT NULL AUTO_INCREMENT," +
-                "Nationality varchar(50)," +
-                "Name varchar(50)," +
-                "PRIMARY KEY (ArtistID))");
-
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS Albums " +
-                "(AlbumID int NOT NULL AUTO_INCREMENT," +
-                "Artist int," +
-                "Name varchar(100)," +
-                "Year int," +
-                "RecordLabel varchar(100)," +
-                "FOREIGN KEY(Artist) REFERENCES Artists(ArtistID)," +
-                "PRIMARY KEY (AlbumID))");
-
-        st.executeUpdate("CREATE TABLE IF NOT EXISTS Songs " +
-                "(SongID int NOT NULL AUTO_INCREMENT," +
-                "Length int," +
-                "Lyrics text," +
-                "Year int," +
-                "Name varchar (200)," +
-                "Artist int," +
-                "Album int," +
-                "PRIMARY KEY (SongID)," +
-                "FOREIGN KEY (Artist) REFERENCES Artists(ArtistID)," +
-                "FOREIGN KEY (Album) REFERENCES Albums(AlbumID))");
-        con.close();
-
-
+    private void editSong() {
     }
 
 
-
-
-
-
 }
+
+
