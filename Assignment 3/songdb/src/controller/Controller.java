@@ -6,6 +6,7 @@ import view.EnglishView;
 import java.sql.*;
 
 public class Controller {
+    ConnectionParams params = null;
 
     public Controller() {
 
@@ -18,9 +19,7 @@ public class Controller {
     }
 
 
-
-
-    public void initDB(ConnectionParams params) throws SQLException {
+    public void initDB() throws SQLException {
         Connection con = DriverManager.getConnection(
                 params.getNoCreds(), params.getUsername(), params.getPassword());
 
