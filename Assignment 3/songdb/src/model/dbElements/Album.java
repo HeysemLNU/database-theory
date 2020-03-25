@@ -7,11 +7,10 @@ public class Album {
     private  int year;
     private String recordLabel;
 
-    public Album (String inputName,int inputYear, int inputArtistID,int inputAlbumID, String inputRecordLabel){
+    public Album (String inputName,int inputYear, int inputArtistID,String inputRecordLabel){
         setName(inputName);
         setYear(inputYear);
         setArtistID(inputArtistID);
-        setAlbumID(inputAlbumID);
         setRecordLabel(inputRecordLabel);
     }
 

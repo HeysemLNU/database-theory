@@ -7,8 +7,8 @@ import view.EnglishView;
 import java.sql.*;
 
 public class Controller {
-
     ConnectionParams params = null;
+
     EnglishView ev = new EnglishView();
 
     public Controller(ConnectionParams par) {
@@ -72,6 +72,7 @@ public class Controller {
     }
 
 
+
     private void addArtist() {
         Artist a = ev.addNewArtist();
         if(a == null) {
@@ -99,6 +100,7 @@ public class Controller {
     private void addSong() {}
     private void removeSong() {}
     private void editSong() {}
+
 
 
 
@@ -143,10 +145,6 @@ public class Controller {
     }
 
 
-
-    /*public void addToArtists(String name,) {
-
-    }*/
 
 
 

@@ -1,9 +1,10 @@
 import controller.*;
 import model.ConnectionParams;
-
+import java.sql.SQLException;
 
 
 public class Main {
+
 
     public static void main(String[] args) {
         //the args that are going to be passed is basically just the host and the port, the rest will be hardcoded for the database dump

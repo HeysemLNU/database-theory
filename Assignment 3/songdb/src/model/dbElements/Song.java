@@ -2,6 +2,7 @@ package model.dbElements;
 
 
 public class Song {
+    private int songID;
     private int length;
     private String name;
     private String lyricks; // discuss this
@@ -9,7 +10,8 @@ public class Song {
     private  int artistID;
     private int albumID;
 
-    public Song (int inputLength, String inputName,int inputYear, int inputArtistID,int inputAlbumID ){
+    public Song (int inputLength, String inputName,int inputYear, int inputArtistID,int inputAlbumID, String inputLyrics ){
+        setLyricks(inputLyrics);
         setLength(inputLength);
         setName(inputName);
         setYear(inputYear);
@@ -35,10 +37,12 @@ public class Song {
     public void  setAlbumID (int setAlbumID){
         albumID =setAlbumID;
     }
+    public void  setSongID (int setSongID) {songID =setSongID;}
     public int getLength(){return length;}
     public String getName(){return name;}
     public String getLyricks (){return lyricks;}
     public int getYear (){return year;}
     public int getArtistID(){return artistID;}
     public int getAlbumID () {return  albumID;}
+    public int getSongID (){return songID;}
 }
