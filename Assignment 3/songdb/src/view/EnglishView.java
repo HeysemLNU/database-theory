@@ -5,6 +5,7 @@ package view;
 import model.CountryCode;
 import model.dbElements.Album;
 import model.dbElements.Artist;
+import model.dbElements.Song;
 import org.w3c.dom.ls.LSOutput;
 
 import java.sql.SQLOutput;
@@ -162,6 +163,12 @@ public class EnglishView implements ViewTemplate {
             System.out.println("Adding album to the database");
             //add the rest of the album here
 
+            return null;
+        }
+
+        public Song addNewSong() {
+            System.out.println("Adding song to the database");
+            //Song s = new Song()
             return null;
         }
 
