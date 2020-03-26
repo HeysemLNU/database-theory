@@ -5,6 +5,7 @@ import model.dbElements.*;
 import view.EnglishView;
 import view.ViewTemplate;
 
+
 import java.sql.*;
 
 public class Controller {
@@ -20,6 +21,7 @@ public class Controller {
     public void startView() {
         boolean keepRunning = true;
         ev.welcomeMessage();
+
         while (keepRunning) {
             EnglishView.SelectedOption so = ev.mainMenu();
             switch (so) {
@@ -61,11 +63,12 @@ public class Controller {
                 }
                 case EXIT: {
                     keepRunning = false;
+                    ev.clear();
                     break;
                 }
 
                 case DEFAULT: {
-                    ev.invalidOption();
+                    ev.error(EnglishView.Errors.DBERROR);
                     break;
                 }
             }
@@ -78,11 +81,15 @@ public class Controller {
         Artist artist = ev.addNewArtist();
         if (artist == null) {
             ev.abort();
+            ev.clear();
         } else {
             try{
                 databaseFunctions.addNewArtist(artist);
-            } catch (SQLException ex) {
+                ev.clear();
+                ev.success();
 
+            } catch (SQLException ex) {
+                ev.error(EnglishView.Errors.DBERROR);
             }
 
             //call the database to add the new artist
@@ -98,7 +105,17 @@ public class Controller {
     }
 
     private void addAlbum() {
-        Album al = ev.addNewAlbum();
+        Album album = ev.addNewAlbum();
+        if (album.getArtistID() == -1) {
+            String artistName = ev.searchArtistByName();
+            try {
+                databaseFunctions.searchArtistsByName(artistName);
+                //here I will continue by actually printing the result set in the view
+            } catch (SQLException ex) {
+                ev.error(EnglishView.Errors.DBERROR);
+            }
+
+        }
     }
 
     private void removeAlbum() {

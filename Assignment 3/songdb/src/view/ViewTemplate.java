@@ -15,7 +15,7 @@ public interface ViewTemplate {
     }
 
     enum Errors {
-        DBERROR,
+        DBERROR, INVALIDARTIST,INVALIDCC,INVALIDOPTION,CLEARERROR, INVALIDYEAR, INVALIDID;
     }
 
 

@@ -1,5 +1,6 @@
 package controller;
 
+import com.mysql.cj.protocol.Resultset;
 import model.ConnectionParams;
 import model.CountryCode;
 import model.dbElements.Album;
@@ -245,5 +246,12 @@ public class EditDB {
                 "FOREIGN KEY (Album) REFERENCES Albums(AlbumID))");
         con.close();
 
+    }
+
+    public ResultSet searchArtistsByName(String name) throws SQLException {
+        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Artists WHERE lower(Name) like " + "'%"+name.toLowerCase()+"%'"  ;
+        return getDb.executeQuery(sqlComand);
     }
 }

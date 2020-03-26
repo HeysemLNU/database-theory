@@ -14,6 +14,7 @@ public class Album {
         setRecordLabel(inputRecordLabel);
     }
 
+
     public void  setName (String setName){
         name =setName;
     }
