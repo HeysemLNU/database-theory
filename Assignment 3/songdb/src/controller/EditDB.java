@@ -254,4 +254,18 @@ public class EditDB {
         String sqlComand = "SELECT * FROM Artists WHERE lower(Name) like " + "'%"+name.toLowerCase()+"%'"  ;
         return getDb.executeQuery(sqlComand);
     }
+
+    public ResultSet searchSongsByName(String name) throws SQLException {
+        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Songs WHERE lower(Name) like " + "'%"+name.toLowerCase()+"%'"  ;
+        return getDb.executeQuery(sqlComand);
+    }
+
+    public ResultSet searchAlbumsByName(String name) throws SQLException {
+        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Albums WHERE lower(Name) like " + "'%"+name.toLowerCase()+"%'"  ;
+        return getDb.executeQuery(sqlComand);
+    }
 }

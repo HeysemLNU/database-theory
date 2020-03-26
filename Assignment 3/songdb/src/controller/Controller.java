@@ -83,7 +83,7 @@ public class Controller {
             ev.abort();
             ev.clear();
         } else {
-            try{
+            try {
                 databaseFunctions.addNewArtist(artist);
                 ev.clear();
                 ev.success();
@@ -106,19 +106,42 @@ public class Controller {
 
     private void addAlbum() {
         Album album = ev.addNewAlbum();
-        if (album.getArtistID() == -1) {
-            String artistName = ev.searchArtistByName();
-            try {
-                databaseFunctions.searchArtistsByName(artistName);
-                //here I will continue by actually printing the result set in the view
-            } catch (SQLException ex) {
-                ev.error(EnglishView.Errors.DBERROR);
-            }
 
+        try {
+            if (album == null) {
+                ev.abort();
+                return;
+            } else if (album.getArtistID() == -1) {
+                searchArtistByName();
+                //after shown, we request for the input of the actual artist
+                String input = ev.requestInput();
+                int artistID = Integer.parseInt(input);
+                if (artistID < 1) {
+                    throw new NumberFormatException();
+                } else {
+                    album.setArtistID(artistID);
+                    databaseFunctions.addNewAlbum(album);
+                    //this won't be reached if an exception is thrown
+                    ev.success();
+                }
+            } else {
+                databaseFunctions.addNewAlbum(album);
+                //wont trigger if catch
+                ev.success();
+            }
+        } catch (NumberFormatException nf) {
+            ev.error(EnglishView.Errors.INVALIDID);
+            ev.abort();
+        } catch (SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
         }
+
+
     }
 
+
     private void removeAlbum() {
+
     }
 
     private void editAlbum() {
@@ -133,6 +156,26 @@ public class Controller {
     private void editSong() {
     }
 
+    private void searchArtistByName() {
+        String artistName = ev.requestXname("artist");
+        try {
+            ResultSet searchResult = databaseFunctions.searchArtistsByName(artistName);
+            //here I will continue by actually printing the result set in the view
+            ev.printResultSet(searchResult);
+        } catch (SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+        }
+    }
+
+    private void searchAlbumByName() {
+        String albumName = ev.requestXname("album");
+        try {
+            ResultSet searchResult = databaseFunctions.searchAlbumsByName(albumName);
+            ev.printResultSet(searchResult);
+        } catch (SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+        }
+    }
 
 }
 

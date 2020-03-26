@@ -1,6 +1,7 @@
 import controller.*;
 import model.ConnectionParams;
 import java.sql.SQLException;
+import java.util.Scanner;
 
 
 public class Main {
@@ -14,6 +15,8 @@ public class Main {
                     "<host> <port> <username> <password> <databasename>");
             System.exit(1);
         }
+
+
 
         String host = args[0];
         int port = Integer.parseInt(args[1]);

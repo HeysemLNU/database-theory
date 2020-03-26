@@ -6,6 +6,7 @@ import model.dbElements.Album;
 import model.dbElements.Artist;
 import model.dbElements.Song;
 
+import java.sql.ResultSet;
 import java.util.Scanner;
 
 public class EnglishView implements ViewTemplate {
@@ -144,12 +145,9 @@ public class EnglishView implements ViewTemplate {
         } else if (cc == null) {
             error(Errors.INVALIDCC);
         } else {
-            System.out.println("The artist is " + artistName + " from: " + cc.toString());
-            System.out.println("Proceed? y/N");
-            prompt();
-            String choice = sc.nextLine();
-            if (choice.equals("y")) {
-                return new Artist(artistName, cc);
+            Artist a = new Artist(artistName, cc);
+            if(confirmArtist(a)) {
+                return a;
             }
         }
         return null;
@@ -157,6 +155,11 @@ public class EnglishView implements ViewTemplate {
     }
 
     public Album addNewAlbum() {
+        //notes about these, if they return null, then it means something has gone wrong.
+        //if it retunrs -1 on the id it means it should prompt the user to search for the artist
+        //via the name
+        //if it returns anything else, it will assume that is the right ID and add it to the db
+
         System.out.println("Adding album to the database");
         System.out.println("Introduce the name of the album");
         prompt();
@@ -168,61 +171,76 @@ public class EnglishView implements ViewTemplate {
         try {
             yearOfRelease = Integer.parseInt(sc.nextLine());
             if (yearOfRelease < 0 || yearOfRelease > 10000) {
-                error(Errors.INVALIDYEAR);
+                throw new NumberFormatException();
             }
         } catch (NumberFormatException nf) {
             error(Errors.INVALIDYEAR);
+            return null;
         }
         System.out.println("Introduce the name of the record label that released this album");
         prompt();
         String recordLabel = sc.nextLine();
         System.out.println("Introduce the ID of the artist who released this album");
         System.out.println("Don't know the artist? Press enter with no input to search artists by name!");
-        int fetchIDresult = fetchID();
-
-        if (fetchIDresult == -1) {
-            return new Album(name, yearOfRelease, -1, recordLabel); //having the id as -1 will trigger
-            //the controller to launch the thing that makes the ID search
-        } else if(fetchIDresult == 0) {
-            //something went wrong and they got to skip the validation
-            error(Errors.INVALIDID);
-        }else {
-
-            System.out.println("The album name is " + name + " released in " + yearOfRelease +
-                    " by " + recordLabel + " with artist ID " + fetchIDresult);
-            System.out.println("Proceed? y/N");
-            prompt();
-            String choice = sc.nextLine();
-            if (choice.equals("y")) {
-                return new Album(name, yearOfRelease, fetchIDresult, recordLabel);
+        prompt();
+        String inputResult = sc.nextLine();
+        if (inputResult.equals("")) {
+            return new Album(name, yearOfRelease, -1, recordLabel);
+        } else {
+            try {
+                int inputID = Integer.parseInt(inputResult);
+                if(inputID < 1) {
+                    throw new NumberFormatException();
+                } else {
+                    System.out.println("The album name is " + name + " released in " + yearOfRelease +
+                            " by " + recordLabel + " with artist ID " + inputID);
+                    System.out.println("Proceed? y/N");
+                    prompt();
+                    String choice = sc.nextLine();
+                    if (choice.equals("y")) {
+                        return new Album(name, yearOfRelease, inputID, recordLabel);
+                    }
+                }
+            } catch (NumberFormatException nf){
+                error(Errors.INVALIDID);
+                return null;
             }
         }
-
         return null;
     }
 
-
-    public int fetchID() {
-        String inputLineID = sc.nextLine();
-
-        try {
-           int result = Integer.parseInt(inputLineID);
-            if (result < 1) {
-                error(Errors.INVALIDID);
-            }
-            return result;
-        } catch (NumberFormatException nf) {
-            error(Errors.INVALIDID);
+    public boolean confirmArtist (Artist art) {
+        System.out.println("The artist is " + art.getName() + " from: " + art.getNationality());
+        System.out.println("Proceed? y/N");
+        prompt();
+        String choice = sc.nextLine();
+        if (choice.equals("y")) {
+            return true;
+        } else {
+            return false;
         }
-        return 0;
     }
 
-    public String searchArtistByName() {
-        System.out.println("Introduce the name of the artist you want to search for");
+    public boolean confirmAlbum(Album alb) {
+        return false;
+    }
+
+
+    public String requestInput() {
+        prompt();
+        return sc.nextLine();
+    }
+
+
+
+    public String requestXname(String x) {
+        System.out.println("Introduce the name of the " + x + " you want to search for");
         prompt();
         String name = sc.nextLine();
         return name;
     }
+
+
 
     public Song addNewSong() {
         System.out.println("Adding song to the database");
@@ -291,6 +309,10 @@ public class EnglishView implements ViewTemplate {
         } catch (Exception e) {
             error(Errors.CLEARERROR);
         }
+    }
+
+    public void printResultSet(ResultSet rs) {
+        DBTablePrinter.printResultSet(rs);
     }
 
 }
