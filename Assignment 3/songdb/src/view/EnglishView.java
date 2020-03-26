@@ -146,7 +146,7 @@ public class EnglishView implements ViewTemplate {
             error(Errors.INVALIDCC);
         } else {
             Artist a = new Artist(artistName, cc);
-            if(confirmArtist(a)) {
+            if (confirmArtist(a)) {
                 return a;
             }
         }
@@ -189,27 +189,23 @@ public class EnglishView implements ViewTemplate {
         } else {
             try {
                 int inputID = Integer.parseInt(inputResult);
-                if(inputID < 1) {
+                if (inputID < 1) {
                     throw new NumberFormatException();
                 } else {
-                    System.out.println("The album name is " + name + " released in " + yearOfRelease +
-                            " by " + recordLabel + " with artist ID " + inputID);
-                    System.out.println("Proceed? y/N");
-                    prompt();
-                    String choice = sc.nextLine();
-                    if (choice.equals("y")) {
-                        return new Album(name, yearOfRelease, inputID, recordLabel);
+                    Album newAlbum = new Album(name, yearOfRelease, inputID, recordLabel);
+                    if (confirmAlbum(newAlbum)) {
+                        return newAlbum;
                     }
+                    return null;
                 }
-            } catch (NumberFormatException nf){
+            } catch (NumberFormatException nf) {
                 error(Errors.INVALIDID);
                 return null;
             }
         }
-        return null;
     }
 
-    public boolean confirmArtist (Artist art) {
+    public boolean confirmArtist(Artist art) {
         System.out.println("The artist is " + art.getName() + " from: " + art.getNationality());
         System.out.println("Proceed? y/N");
         prompt();
@@ -222,15 +218,29 @@ public class EnglishView implements ViewTemplate {
     }
 
     public boolean confirmAlbum(Album alb) {
-        return false;
+        System.out.println("The album is " + alb.getName() + " released in " + alb.getYear() +
+                " by the record label " + alb.getRecordLabel() + " with artistID " + alb.getArtistID());
+        System.out.println("Proceed? y/N");
+        prompt();
+        String choice = sc.nextLine();
+        if (choice.equals("y")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
-    public String requestInput() {
+    public String requestInput(InputRequests req) {
+        switch(req) {
+            case ASKID: {
+                System.out.println("Input the desired ID");
+                break;
+            }
+        }
         prompt();
         return sc.nextLine();
     }
-
 
 
     public String requestXname(String x) {
@@ -239,7 +249,6 @@ public class EnglishView implements ViewTemplate {
         String name = sc.nextLine();
         return name;
     }
-
 
 
     public Song addNewSong() {

@@ -18,5 +18,7 @@ public interface ViewTemplate {
         DBERROR, INVALIDARTIST,INVALIDCC,INVALIDOPTION,CLEARERROR, INVALIDYEAR, INVALIDID;
     }
 
-
+    enum InputRequests {
+        ASKID;
+    }
 }

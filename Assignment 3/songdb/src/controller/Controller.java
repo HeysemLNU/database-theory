@@ -114,15 +114,19 @@ public class Controller {
             } else if (album.getArtistID() == -1) {
                 searchArtistByName();
                 //after shown, we request for the input of the actual artist
-                String input = ev.requestInput();
+                String input = ev.requestInput(EnglishView.InputRequests.ASKID);
                 int artistID = Integer.parseInt(input);
                 if (artistID < 1) {
                     throw new NumberFormatException();
                 } else {
                     album.setArtistID(artistID);
-                    databaseFunctions.addNewAlbum(album);
-                    //this won't be reached if an exception is thrown
-                    ev.success();
+                    if(ev.confirmAlbum(album)) {
+                        databaseFunctions.addNewAlbum(album);
+                        ev.success();
+                    } else {
+                        ev.abort();
+
+                    }
                 }
             } else {
                 databaseFunctions.addNewAlbum(album);
