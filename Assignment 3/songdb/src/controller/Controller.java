@@ -3,7 +3,6 @@ package controller;
 import model.*;
 import model.dbElements.*;
 import view.EnglishView;
-import view.ViewTemplate;
 
 
 import java.sql.*;
@@ -34,10 +33,7 @@ public class Controller {
                     removeArtist();
                     break;
                 }
-                case EDITARTIST: {
-                    editArtist();
-                    break;
-                }
+
                 case ADDALBUM: {
                     addAlbum();
                     break;
@@ -46,10 +42,7 @@ public class Controller {
                     removeAlbum();
                     break;
                 }
-                case EDITALBUM: {
-                    editAlbum();
-                    break;
-                }
+
                 case ADDSONG: {
                     addSong();
                     break;
@@ -58,8 +51,12 @@ public class Controller {
                     removeSong();
                     break;
                 }
-                case EDITSONG: {
-                    editSong();
+                case SEARCHSONGNAME: {
+                    searchSongByName();
+                    break;
+                }
+                case SEARCHSONGLYRICS: {
+                    searchSongByLyrics();
                     break;
                 }
                 case EXIT: {
@@ -69,7 +66,7 @@ public class Controller {
                 }
 
                 case DEFAULT: {
-                    ev.error(EnglishView.Errors.DBERROR);
+                    ev.error(EnglishView.Errors.INVALIDOPTION);
                     break;
                 }
             }
@@ -103,8 +100,7 @@ public class Controller {
 
     }
 
-    private void editArtist() {
-    }
+
 
     private void addAlbum() {
         Album album = ev.addNewAlbum();
@@ -124,6 +120,7 @@ public class Controller {
                     album.setArtistID(artistID);
                     if(ev.confirmAlbum(album)) {
                         databaseFunctions.addNewAlbum(album);
+                        databaseFunctions.closeConnection();
                         ev.clear();
                         ev.success();
                     } else {
@@ -131,9 +128,14 @@ public class Controller {
                     }
                 }
             } else {
-                databaseFunctions.addNewAlbum(album);
-                //wont trigger if catch
-                ev.success();
+                if (ev.confirmAlbum(album)) {
+                    databaseFunctions.addNewAlbum(album);
+                    databaseFunctions.closeConnection();
+
+                    //wont trigger if catch
+                    ev.success();
+                }
+
             }
         } catch (NumberFormatException nf) {
             ev.error(EnglishView.Errors.INVALIDID);
@@ -150,8 +152,6 @@ public class Controller {
 
     }
 
-    private void editAlbum() {
-    }
 
     private void addSong() {
         Song song = ev.addNewSong();
@@ -175,6 +175,7 @@ public class Controller {
             if (song.getAlbumID() > 0) {
                 if (ev.confirmSong(song)) {
                     databaseFunctions.addNewSong(song);
+                    databaseFunctions.closeConnection();
                     ev.clear();
                     ev.success();
                 } else {
@@ -203,6 +204,7 @@ public class Controller {
             ResultSet searchResult = databaseFunctions.searchArtistsByName(artistName);
             //here I will continue by actually printing the result set in the view
             ev.printResultSet(searchResult);
+            databaseFunctions.closeConnection();
         } catch (SQLException ex) {
             ev.error(EnglishView.Errors.DBERROR);
         }
@@ -224,6 +226,16 @@ public class Controller {
             ResultSet searchResult = databaseFunctions.searchSongsByName(songName);
             ev.printResultSet(searchResult);
         } catch (SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+        }
+    }
+
+    private void searchSongByLyrics() {
+        String songLyrics = ev.requestXname("lyrics");
+        try {
+            ResultSet lyricsSearchResult = databaseFunctions.searchSongByLyrics(songLyrics);
+            ev.printResultSet(lyricsSearchResult);
+        }  catch (SQLException ex) {
             ev.error(EnglishView.Errors.DBERROR);
         }
     }

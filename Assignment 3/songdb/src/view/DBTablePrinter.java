@@ -589,7 +589,7 @@ public class DBTablePrinter {
             info += tableNames.size() > 1 ? "tables " : "table ";
             info += sj.toString();
 
-            System.out.println(info);
+            //System.out.println(info);
 
             // Print out the formatted column labels
             System.out.print(strToPrint.toString());

@@ -12,62 +12,67 @@ import java.util.ArrayList;
 @SuppressWarnings("Duplicates")
 public class EditDB {
     ConnectionParams params;
+    Connection con = null;
 
     public EditDB(ConnectionParams paramsDB) {
         params = paramsDB;
     }
 
+    public void connect() throws SQLException {
+        con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+    }
+
     public void addNewArtist(Artist newArtist) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement addArtist = con.createStatement();
         addArtist.executeUpdate("INSERT INTO Artists (Nationality, Name) VALUES ('" + newArtist.getNationality() + "', '" + newArtist.getName() + "')");
         con.close();
     }
 
     public void addNewSong(Song newSong) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement addSong = con.createStatement();
         addSong.executeUpdate("INSERT INTO Songs (Length, Lyrics, Year, Name, Album) VALUES ('" + newSong.getLength() + "',  '" + newSong.getLyrics() + "','" + newSong.getYear() + "','" + newSong.getName() + "','" + newSong.getAlbumID() + "')");
         con.close();
     }
 
     public void addNewAlbum(Album newAlbum) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement addAlbum = con.createStatement();
         addAlbum.executeUpdate("INSERT  INTO Albums (Artist, Name, Year, RecordLabel) VALUES ('" + newAlbum.getArtistID() + "','" + newAlbum.getName() + "','" + newAlbum.getYear() + "','" + newAlbum.getRecordLabel() + "')");
         con.close();
     }
 
     public void deleteArtist(int artistID) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement delete = con.createStatement();
         delete.executeUpdate("DELETE FROM Artists WHERE ArtistID = '" + artistID + "'");
         con.close();
     }
 
     public void deleteSong(int songID) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement delete = con.createStatement();
         delete.executeUpdate("DELETE FROM Songs WHERE SongID = '" + songID + "'");
         con.close();
     }
 
     public void deleteAlbum(int albumID) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement delete = con.createStatement();
         delete.executeUpdate("DELETE FROM Albums WHERE AlbumID = '" + albumID + "'");
         con.close();
     }
 
     public void editArtist(Artist editArtist) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement edit = con.createStatement();
         edit.executeUpdate("UPDATE Artists SET Nationality = '" + editArtist.getNationality() + "', Name = '" + editArtist.getName() + "' WHERE ArtistID = '" + editArtist.getId() + "'");
         con.close();
     }
 
     public void editAlbum(Album editAlbum) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement edit = con.createStatement();
         edit.executeUpdate("UPDATE Albums SET Artist ='" + editAlbum.getArtistID() + "', Name = '" + editAlbum.getName() + "', Year = '" + editAlbum.getYear() + "', RecordLabel = '" + editAlbum.getRecordLabel() + "' WHERE AlbumID = '" + editAlbum.getAlbumID() + "'");
         con.close();
@@ -85,7 +90,7 @@ public class EditDB {
     public Artist getArtistDB(int id) throws SQLException {
         String name = null;
         String countryCode = null;
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
         ResultSet resultSet = getDb.executeQuery("SELECT * FROM Artists WHERE ArtistID = '" + id + "'");
         while (resultSet.next()) {
@@ -103,7 +108,7 @@ public class EditDB {
         String name = null;
         int year = 0;
         String recordLabel = null;
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
         ResultSet resultSet = getDb.executeQuery("SELECT * FROM Albums WHERE AlbumID = '" + id + "'");
         while (resultSet.next()) {
@@ -125,7 +130,7 @@ public class EditDB {
         int year = 0;
         int length = 0;
         String lyrics = null;
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
         ResultSet resultSet = getDb.executeQuery("SELECT * FROM Songs WHERE SongID = '" + id + "'");
         while (resultSet.next()) {
@@ -148,7 +153,7 @@ public class EditDB {
         int length = 0;
         String lyrics = null;
         ArrayList<Song> allSongs = new ArrayList<>();
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
         String sqlComand = "SELECT * FROM Songs WHERE " + typeInfo + " = " + info;
         ResultSet resultSet = getDb.executeQuery(sqlComand);
@@ -172,7 +177,7 @@ public class EditDB {
         int year = 0;
         String recordLabel = null;
         ArrayList<Album> allAlbums = new ArrayList<>();
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
         String sqlComand = "SELECT * FROM Albums WHERE " + typeInfo + " = " + info;
         ResultSet resultSet = getDb.executeQuery(sqlComand);
@@ -193,7 +198,7 @@ public class EditDB {
         String name = null;
         String countryCode = null;
         ArrayList<Artist> allArtists = new ArrayList<>();
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
         String sqlComand = "SELECT * FROM Artists WHERE " + typeInfo + " = " + info;
         ResultSet resultSet = getDb.executeQuery(sqlComand);
@@ -209,8 +214,7 @@ public class EditDB {
     }
 
     public void initDB() throws SQLException {
-        Connection con = DriverManager.getConnection(
-                params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
 
         Statement st = con.createStatement();
 
@@ -245,23 +249,44 @@ public class EditDB {
     }
 
     public ResultSet searchArtistsByName(String name) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
-        String sqlComand = "SELECT * FROM Artists WHERE lower(Name) like " + "'%"+name.toLowerCase()+"%'"  ;
+        String sqlComand = "SELECT * FROM Artists WHERE lower(Name) like " + "'%" + name.toLowerCase() + "%'";
         return getDb.executeQuery(sqlComand);
     }
 
     public ResultSet searchSongsByName(String name) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
-        String sqlComand = "SELECT * FROM Songs WHERE lower(Name) like " + "'%"+name.toLowerCase()+"%'"  ;
+        String sqlComand = "SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums" +
+                " on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID " +
+                " WHERE lower(`Songs`.`Name`) like " + "'%" + name.toLowerCase() + "%'";
+
         return getDb.executeQuery(sqlComand);
     }
 
     public ResultSet searchAlbumsByName(String name) throws SQLException {
-        Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
+        connect();
         Statement getDb = con.createStatement();
-        String sqlComand = "SELECT * FROM Albums WHERE lower(Name) like " + "'%"+name.toLowerCase()+"%'"  ;
+        String sqlComand = "SELECT * FROM Albums WHERE lower(Name) like " + "'%" + name.toLowerCase() + "%'";
         return getDb.executeQuery(sqlComand);
+    }
+
+    public ResultSet searchSongByLyrics(String lyricsText) throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums" +
+                " on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID " +
+                " WHERE lower(`Songs`.`Lyrics`) like " + "'%" + lyricsText.toLowerCase() + "%'";
+
+        return getDb.executeQuery(sqlComand);
+    }
+
+    public void closeConnection() throws SQLException {
+        if (!con.isClosed()) {
+            //close the connection if it's not open
+            con.close();
+        }
+
     }
 }

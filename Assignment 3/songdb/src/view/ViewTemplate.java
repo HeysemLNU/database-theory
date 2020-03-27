@@ -11,7 +11,7 @@ public interface ViewTemplate {
     enum SelectedOption {
         DEFAULT, ADDARTIST, REMOVEARTIST, EDITARTIST, ADDSONG,
         REMOVESONG, EDITSONG, ADDALBUM, REMOVEALBUM, EDITALBUM,
-        EXIT;
+        EXIT, SEARCHSONGNAME, SEARCHSONGLYRICS;
     }
 
     enum Errors {

@@ -89,6 +89,12 @@ public class EnglishView implements ViewTemplate {
                 case 6: {
                     return SelectedOption.REMOVESONG;
                 }
+                case 7: {
+                    return SelectedOption.SEARCHSONGNAME;
+                }
+                case 8: {
+                    return SelectedOption.SEARCHSONGLYRICS;
+                }
                 case 0: {
                     return SelectedOption.EXIT;
                 }
@@ -115,7 +121,8 @@ public class EnglishView implements ViewTemplate {
 
         System.out.println("5: Add Song");
         System.out.println("6: Remove Song");
-
+        System.out.println("7: Search Song by name");
+        System.out.println("8: Search Song by Lyric Name");
         System.out.println("0: exit");
     }
 
@@ -290,8 +297,14 @@ public class EnglishView implements ViewTemplate {
     }
 
     public boolean confirmSong(Song son) {
+        String shortLyrics = "";
+        if(son.getLyrics().length() < 31) {
+            shortLyrics = son.getLyrics();
+        } else {
+            shortLyrics = son.getLyrics().substring(0, 30);
+        }
         System.out.println("The song is " + son.getName() + " released in " + son.getYear() +
-                " with a length of " + son.getLyrics().substring(0,30) + "....."
+                " with a length of " + son.getLyrics() + " and lyrics starting with " + shortLyrics + "....."
         + " where the album ID is " + son.getAlbumID());
         System.out.println("Proceed? y/N");
         prompt();
