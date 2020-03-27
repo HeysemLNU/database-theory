@@ -7,7 +7,6 @@ import model.dbElements.Artist;
 import model.dbElements.Song;
 
 import java.sql.ResultSet;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class EnglishView implements ViewTemplate {
@@ -313,6 +312,20 @@ public class EnglishView implements ViewTemplate {
         prompt();
         String choice = sc.nextLine();
         if (choice.equals("y")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean confirmSong(Song son) {
+        System.out.println("The song is " + son.getName() + " released in " + son.getYear() +
+                " with a length of " + son.getLyrics() + "s where the artist ID is " + son.getArtistID()
+        + " and the album ID is " + son.getAlbumID());
+        System.out.println("Proceed? y/N");
+        prompt();
+        String choice = sc.nextLine();
+        if(choice.equals("y")) {
             return true;
         } else {
             return false;

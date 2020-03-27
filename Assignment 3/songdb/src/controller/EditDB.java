@@ -1,6 +1,5 @@
 package controller;
 
-import com.mysql.cj.protocol.Resultset;
 import model.ConnectionParams;
 import model.CountryCode;
 import model.dbElements.Album;
@@ -28,7 +27,7 @@ public class EditDB {
     public void addNewSong(Song newSong) throws SQLException {
         Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
         Statement addSong = con.createStatement();
-        addSong.executeUpdate("INSERT INTO Songs (Length, Lyrics, Year, Name, Artist, Album) VALUES ('" + newSong.getLength() + "',  '" + newSong.getLyricks() + "','" + newSong.getYear() + "','" + newSong.getName() + "','" + newSong.getArtistID() + "','" + newSong.getAlbumID() + "')");
+        addSong.executeUpdate("INSERT INTO Songs (Length, Lyrics, Year, Name, Artist, Album) VALUES ('" + newSong.getLength() + "',  '" + newSong.getLyrics() + "','" + newSong.getYear() + "','" + newSong.getName() + "','" + newSong.getArtistID() + "','" + newSong.getAlbumID() + "')");
         con.close();
     }
 
@@ -77,7 +76,7 @@ public class EditDB {
     public void editSong(Song editSong) throws SQLException {
         Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
         Statement edit = con.createStatement();
-        edit.executeUpdate("UPDATE Songs SET Length = '" + editSong.getLength() + "', Lyrics = '" + editSong.getLyricks() + "', Year = '" + editSong.getYear() + "', Name = '" + editSong.getName() + "', Artist = '" + editSong.getArtistID() + "', Album = '" + editSong.getAlbumID() + "' WHERE  SongID = '" + editSong.getSongID() + "'");
+        edit.executeUpdate("UPDATE Songs SET Length = '" + editSong.getLength() + "', Lyrics = '" + editSong.getLyrics() + "', Year = '" + editSong.getYear() + "', Name = '" + editSong.getName() + "', Artist = '" + editSong.getArtistID() + "', Album = '" + editSong.getAlbumID() + "' WHERE  SongID = '" + editSong.getSongID() + "'");
         con.close();
     }
 

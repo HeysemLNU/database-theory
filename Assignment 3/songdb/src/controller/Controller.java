@@ -154,9 +154,11 @@ public class Controller {
     private void addSong() {
         Song song = ev.addNewSong();
         try {
+            //need to use ifs rather than if elses for all the statements to execute!
             if (song == null) {
                 ev.abort();
-            } else if (song.getAlbumID() == -1) {
+            }
+            if (song.getAlbumID() == -1) {
                 searchAlbumByName();
                 String albumString = ev.requestInput(EnglishView.InputRequests.ASKID);
                 int albumID = Integer.parseInt(albumString);
@@ -165,7 +167,8 @@ public class Controller {
                     ev.abort();
                 }
                 song.setAlbumID(albumID);
-            } else if (song.getArtistID() == -1) {
+            }
+            if (song.getArtistID() == -1) {
                 searchArtistByName();
                 String artistString = ev.requestInput(EnglishView.InputRequests.ASKID);
                 int artistID = Integer.parseInt(artistString);
@@ -174,7 +177,9 @@ public class Controller {
                     ev.abort();
                 }
                 song.setArtistID(artistID);
-            } else if (song.getArtistID() > 0 && song.getAlbumID() > 0) {
+            }
+            if (song.getArtistID() > 0 && song.getAlbumID() > 0) {
+                ev.confirmSong();
                 databaseFunctions.addNewSong(song);
                 ev.clear();
                 ev.success();
