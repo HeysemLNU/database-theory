@@ -78,25 +78,16 @@ public class EnglishView implements ViewTemplate {
                     return SelectedOption.REMOVEARTIST;
                 }
                 case 3: {
-                    return SelectedOption.EDITARTIST;
-                }
-                case 4: {
                     return SelectedOption.ADDALBUM;
                 }
-                case 5: {
+                case 4: {
                     return SelectedOption.REMOVEALBUM;
                 }
-                case 6: {
-                    return SelectedOption.EDITALBUM;
-                }
-                case 7: {
+                case 5: {
                     return SelectedOption.ADDSONG;
                 }
-                case 8: {
+                case 6: {
                     return SelectedOption.REMOVESONG;
-                }
-                case 9: {
-                    return SelectedOption.EDITSONG;
                 }
                 case 0: {
                     return SelectedOption.EXIT;
@@ -118,13 +109,13 @@ public class EnglishView implements ViewTemplate {
     private void printOptions() {
         System.out.println("1: Add Artist");
         System.out.println("2: Remove Artist");
-        System.out.println("3: Edit Artist");
-        System.out.println("4: Add Album");
-        System.out.println("5: Remove Album");
-        System.out.println("6: Edit Album");
-        System.out.println("7: Add Song");
-        System.out.println("8: Remove Song");
-        System.out.println("9: Edit Song");
+
+        System.out.println("3: Add Album");
+        System.out.println("4: Remove Album");
+
+        System.out.println("5: Add Song");
+        System.out.println("6: Remove Song");
+
         System.out.println("0: exit");
     }
 
@@ -188,29 +179,9 @@ public class EnglishView implements ViewTemplate {
         }
         System.out.println("Introduce the full lyrics of the song");
         prompt();
-        String inputLyrics = sc.nextLine();
-        System.out.println("Introduce the ID of the artist who released this song");
-        System.out.println("Don't know the artist? Press enter with no input to search artists by name!");
-        System.out.println("The search will be performed after the input of the remaining values");
-        prompt();
-        String inputArtistID = sc.nextLine();
-        int artistID = -1;
-        Song addedsong = new Song(length,songName,year,0,0,inputLyrics);
-        if(inputArtistID.equals("")) {
-            addedsong.setArtistID(artistID);
-        } else {
-            try{
-                artistID = Integer.parseInt(inputArtistID);
-                if(artistID < 1) {
-                    throw new NumberFormatException();
-                }
-                addedsong.setArtistID(artistID);
+        String inputLyrics = formatTextSql(sc.nextLine());
 
-            } catch(NumberFormatException nf) {
-                error(Errors.INVALIDID);
-                return null;
-            }
-        }
+        Song addedsong = new Song(length,songName,year,0,inputLyrics);
         System.out.println("Introduce the ID of the album this song belongs to");
         System.out.println("Don't know the ID? Press enter with no input to trigger a search based on the name!");
         System.out.println("The searches will be performed in order!");
@@ -232,10 +203,10 @@ public class EnglishView implements ViewTemplate {
             }
         }
 
-        if(addedsong.getArtistID() == 0 || addedsong.getAlbumID() == 0){
+        if(addedsong.getAlbumID() == 0){
             //something went wrong, therefore return null
             return null;
-        } else if(addedsong.getArtistID() == -1 || addedsong.getAlbumID() == -1) {
+        } else if(addedsong.getAlbumID() == -1) {
             return addedsong;
         } else {
             return addedsong;
@@ -320,8 +291,8 @@ public class EnglishView implements ViewTemplate {
 
     public boolean confirmSong(Song son) {
         System.out.println("The song is " + son.getName() + " released in " + son.getYear() +
-                " with a length of " + son.getLyrics() + "s where the artist ID is " + son.getArtistID()
-        + " and the album ID is " + son.getAlbumID());
+                " with a length of " + son.getLyrics().substring(0,30) + "....."
+        + " where the album ID is " + son.getAlbumID());
         System.out.println("Proceed? y/N");
         prompt();
         String choice = sc.nextLine();
@@ -425,9 +396,9 @@ public class EnglishView implements ViewTemplate {
         DBTablePrinter.printResultSet(rs);
     }
 
-    public void formatTextSql(String s) {
-        //String s1 = s.replaceAll(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b);
-        //return s1;
+    public String formatTextSql(String s) {
+        String s1 = s.replaceAll("[^a-zA-Z0-9 ]"," ");
+        return s1;
     }
 }
 

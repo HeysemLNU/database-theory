@@ -19,6 +19,7 @@ public class Controller {
     }
 
     public void startView() {
+
         boolean keepRunning = true;
         ev.welcomeMessage();
 
@@ -84,6 +85,7 @@ public class Controller {
             ev.clear();
         } else {
             try {
+
                 databaseFunctions.addNewArtist(artist);
                 ev.clear();
                 ev.success();
@@ -157,6 +159,7 @@ public class Controller {
             //need to use ifs rather than if elses for all the statements to execute!
             if (song == null) {
                 ev.abort();
+                return;
             }
             if (song.getAlbumID() == -1) {
                 searchAlbumByName();
@@ -168,21 +171,16 @@ public class Controller {
                 }
                 song.setAlbumID(albumID);
             }
-            if (song.getArtistID() == -1) {
-                searchArtistByName();
-                String artistString = ev.requestInput(EnglishView.InputRequests.ASKID);
-                int artistID = Integer.parseInt(artistString);
-                if (artistID < 1) {
-                    ev.error(EnglishView.Errors.INVALIDID);
+            //this if then should be working as long as they have set the ID properly
+            if (song.getAlbumID() > 0) {
+                if (ev.confirmSong(song)) {
+                    databaseFunctions.addNewSong(song);
+                    ev.clear();
+                    ev.success();
+                } else {
                     ev.abort();
                 }
-                song.setArtistID(artistID);
-            }
-            if (song.getArtistID() > 0 && song.getAlbumID() > 0) {
-                ev.confirmSong();
-                databaseFunctions.addNewSong(song);
-                ev.clear();
-                ev.success();
+
             }
         } catch(NumberFormatException nf) {
             ev.error(EnglishView.Errors.INVALIDID);

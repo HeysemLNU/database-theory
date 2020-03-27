@@ -27,7 +27,7 @@ public class EditDB {
     public void addNewSong(Song newSong) throws SQLException {
         Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
         Statement addSong = con.createStatement();
-        addSong.executeUpdate("INSERT INTO Songs (Length, Lyrics, Year, Name, Artist, Album) VALUES ('" + newSong.getLength() + "',  '" + newSong.getLyrics() + "','" + newSong.getYear() + "','" + newSong.getName() + "','" + newSong.getArtistID() + "','" + newSong.getAlbumID() + "')");
+        addSong.executeUpdate("INSERT INTO Songs (Length, Lyrics, Year, Name, Album) VALUES ('" + newSong.getLength() + "',  '" + newSong.getLyrics() + "','" + newSong.getYear() + "','" + newSong.getName() + "','" + newSong.getAlbumID() + "')");
         con.close();
     }
 
@@ -72,6 +72,7 @@ public class EditDB {
         edit.executeUpdate("UPDATE Albums SET Artist ='" + editAlbum.getArtistID() + "', Name = '" + editAlbum.getName() + "', Year = '" + editAlbum.getYear() + "', RecordLabel = '" + editAlbum.getRecordLabel() + "' WHERE AlbumID = '" + editAlbum.getAlbumID() + "'");
         con.close();
     }
+/*
 
     public void editSong(Song editSong) throws SQLException {
         Connection con = DriverManager.getConnection(params.getNoCreds(), params.getUsername(), params.getPassword());
@@ -79,6 +80,7 @@ public class EditDB {
         edit.executeUpdate("UPDATE Songs SET Length = '" + editSong.getLength() + "', Lyrics = '" + editSong.getLyrics() + "', Year = '" + editSong.getYear() + "', Name = '" + editSong.getName() + "', Artist = '" + editSong.getArtistID() + "', Album = '" + editSong.getAlbumID() + "' WHERE  SongID = '" + editSong.getSongID() + "'");
         con.close();
     }
+*/
 
     public Artist getArtistDB(int id) throws SQLException {
         String name = null;
@@ -127,7 +129,6 @@ public class EditDB {
         Statement getDb = con.createStatement();
         ResultSet resultSet = getDb.executeQuery("SELECT * FROM Songs WHERE SongID = '" + id + "'");
         while (resultSet.next()) {
-            artistID = resultSet.getInt("Artist");
             name = resultSet.getString("Name");
             year = resultSet.getInt("Year");
             albumID = resultSet.getInt("Album");
@@ -135,14 +136,13 @@ public class EditDB {
             lyrics = resultSet.getString("Lyrics");
         }
         con.close();
-        Song returnSong = new Song(length, name, year, artistID, albumID, lyrics);
+        Song returnSong = new Song(length, name, year, albumID, lyrics);
         returnSong.setSongID(id);
         return returnSong;
     }
 
     public ArrayList<Song> getAllSongDB(String typeInfo, String info) throws SQLException {
         int albumID = 0;
-        int artistID = 0;
         String name = null;
         int year = 0;
         int length = 0;
@@ -153,13 +153,12 @@ public class EditDB {
         String sqlComand = "SELECT * FROM Songs WHERE " + typeInfo + " = " + info;
         ResultSet resultSet = getDb.executeQuery(sqlComand);
         while (resultSet.next()) {
-            artistID = resultSet.getInt("Artist");
             name = resultSet.getString("Name");
             year = resultSet.getInt("Year");
             albumID = resultSet.getInt("Album");
             length = resultSet.getInt("Length");
             lyrics = resultSet.getString("Lyrics");
-            Song returnSong = new Song(length, name, year, artistID, albumID, lyrics);
+            Song returnSong = new Song(length, name, year, albumID, lyrics);
             returnSong.setSongID(resultSet.getInt("SongID"));
             allSongs.add(returnSong);
         }
@@ -238,10 +237,8 @@ public class EditDB {
                 "Lyrics text," +
                 "Year int," +
                 "Name varchar (200)," +
-                "Artist int," +
                 "Album int," +
                 "PRIMARY KEY (SongID)," +
-                "FOREIGN KEY (Artist) REFERENCES Artists(ArtistID)," +
                 "FOREIGN KEY (Album) REFERENCES Albums(AlbumID))");
         con.close();
 
