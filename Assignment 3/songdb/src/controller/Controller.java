@@ -122,10 +122,10 @@ public class Controller {
                     album.setArtistID(artistID);
                     if(ev.confirmAlbum(album)) {
                         databaseFunctions.addNewAlbum(album);
+                        ev.clear();
                         ev.success();
                     } else {
                         ev.abort();
-
                     }
                 }
             } else {
@@ -152,6 +152,40 @@ public class Controller {
     }
 
     private void addSong() {
+        Song song = ev.addNewSong();
+        try {
+            if (song == null) {
+                ev.abort();
+            } else if (song.getAlbumID() == -1) {
+                searchAlbumByName();
+                String albumString = ev.requestInput(EnglishView.InputRequests.ASKID);
+                int albumID = Integer.parseInt(albumString);
+                if(albumID < 1) {
+                    ev.error(EnglishView.Errors.INVALIDID);
+                    ev.abort();
+                }
+                song.setAlbumID(albumID);
+            } else if (song.getArtistID() == -1) {
+                searchArtistByName();
+                String artistString = ev.requestInput(EnglishView.InputRequests.ASKID);
+                int artistID = Integer.parseInt(artistString);
+                if (artistID < 1) {
+                    ev.error(EnglishView.Errors.INVALIDID);
+                    ev.abort();
+                }
+                song.setArtistID(artistID);
+            } else if (song.getArtistID() > 0 && song.getAlbumID() > 0) {
+                databaseFunctions.addNewSong(song);
+                ev.clear();
+                ev.success();
+            }
+        } catch(NumberFormatException nf) {
+            ev.error(EnglishView.Errors.INVALIDID);
+            ev.abort();
+        } catch(SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
+        }
     }
 
     private void removeSong() {
@@ -175,6 +209,16 @@ public class Controller {
         String albumName = ev.requestXname("album");
         try {
             ResultSet searchResult = databaseFunctions.searchAlbumsByName(albumName);
+            ev.printResultSet(searchResult);
+        } catch (SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+        }
+    }
+
+    private void searchSongByName() {
+        String songName = ev.requestXname("song");
+        try {
+            ResultSet searchResult = databaseFunctions.searchSongsByName(songName);
             ev.printResultSet(searchResult);
         } catch (SQLException ex) {
             ev.error(EnglishView.Errors.DBERROR);

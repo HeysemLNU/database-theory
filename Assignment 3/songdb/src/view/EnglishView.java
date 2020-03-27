@@ -7,6 +7,7 @@ import model.dbElements.Artist;
 import model.dbElements.Song;
 
 import java.sql.ResultSet;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class EnglishView implements ViewTemplate {
@@ -154,6 +155,94 @@ public class EnglishView implements ViewTemplate {
 
     }
 
+    public Song addNewSong() {
+        System.out.println("Adding song to the database");
+        //Song s = new Song()
+        System.out.println("Introduce the name of the song");
+        prompt();
+        String songName = sc.nextLine();
+        System.out.println("Introduce the length of the song in seconds");
+        prompt();
+        String inputLength = sc.nextLine();
+        int length = -1;
+        try {
+            length = Integer.parseInt(inputLength);
+            if(length < 0) {
+                throw new NumberFormatException();
+            }
+        } catch(NumberFormatException nf) {
+            error(Errors.INVALIDLENGTH);
+            return null;
+        }
+        System.out.println("Introduce the year of release of the song");
+        prompt();
+        String inputYear = sc.nextLine();
+        int year = -1;
+        try {
+            year = Integer.parseInt(inputYear);
+            if (year < 0 || year > 10000) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException nf) {
+            error(Errors.INVALIDYEAR);
+            return null;
+        }
+        System.out.println("Introduce the full lyrics of the song");
+        prompt();
+        String inputLyrics = sc.nextLine();
+        System.out.println("Introduce the ID of the artist who released this song");
+        System.out.println("Don't know the artist? Press enter with no input to search artists by name!");
+        System.out.println("The search will be performed after the input of the remaining values");
+        prompt();
+        String inputArtistID = sc.nextLine();
+        int artistID = -1;
+        Song addedsong = new Song(length,songName,year,0,0,inputLyrics);
+        if(inputArtistID.equals("")) {
+            addedsong.setArtistID(artistID);
+        } else {
+            try{
+                artistID = Integer.parseInt(inputArtistID);
+                if(artistID < 1) {
+                    throw new NumberFormatException();
+                }
+                addedsong.setArtistID(artistID);
+
+            } catch(NumberFormatException nf) {
+                error(Errors.INVALIDID);
+                return null;
+            }
+        }
+        System.out.println("Introduce the ID of the album this song belongs to");
+        System.out.println("Don't know the ID? Press enter with no input to trigger a search based on the name!");
+        System.out.println("The searches will be performed in order!");
+        prompt();
+        String inputAlbumID = sc.nextLine();
+        int albumID = -1;
+        if(inputAlbumID.equals("")) {
+            addedsong.setAlbumID(albumID);
+        } else {
+            try {
+                albumID = Integer.parseInt(inputAlbumID);
+                if(albumID < 1) {
+                    throw new NumberFormatException();
+                }
+                addedsong.setAlbumID(albumID);
+            } catch (NumberFormatException nf) {
+                error(Errors.INVALIDID);
+                return null;
+            }
+        }
+
+        if(addedsong.getArtistID() == 0 || addedsong.getAlbumID() == 0){
+            //something went wrong, therefore return null
+            return null;
+        } else if(addedsong.getArtistID() == -1 || addedsong.getAlbumID() == -1) {
+            return addedsong;
+        } else {
+            return addedsong;
+        }
+    }
+
     public Album addNewAlbum() {
         //notes about these, if they return null, then it means something has gone wrong.
         //if it retunrs -1 on the id it means it should prompt the user to search for the artist
@@ -251,11 +340,7 @@ public class EnglishView implements ViewTemplate {
     }
 
 
-    public Song addNewSong() {
-        System.out.println("Adding song to the database");
-        //Song s = new Song()
-        return null;
-    }
+
 
     public void abort() {
         //perhaps make a better error management system with enums
@@ -297,6 +382,9 @@ public class EnglishView implements ViewTemplate {
                 System.out.println("The ID introduced is not valid");
                 return;
             }
+            case INVALIDLENGTH: {
+                System.out.println("The length introduced is not valid");
+            }
         }
     }
 
@@ -324,5 +412,9 @@ public class EnglishView implements ViewTemplate {
         DBTablePrinter.printResultSet(rs);
     }
 
+    public void formatTextSql(String s) {
+        //String s1 = s.replaceAll(\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b);
+        //return s1;
+    }
 }
 
