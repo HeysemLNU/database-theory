@@ -98,6 +98,12 @@ public class EnglishView implements ViewTemplate {
                 case 9: {
                     return SelectedOption.SEARCHALBUMBYNAME;
                 }
+                case 10: {
+                    return SelectedOption.SEARCHARTISTBYNAME;
+                }
+                case 1000: {
+                    return SelectedOption.INITDB;
+                }
                 case 0: {
                     return SelectedOption.EXIT;
                 }
@@ -126,7 +132,9 @@ public class EnglishView implements ViewTemplate {
         System.out.println("6: Remove Song");
         System.out.println("7: Search Song by name");
         System.out.println("8: Search Song by Lyric Name");
-        System.out.println();
+        System.out.println("9: Search album by Name");
+        System.out.println("10: Search Artist By Name");
+
         System.out.println("0: exit");
     }
 
@@ -263,10 +271,7 @@ public class EnglishView implements ViewTemplate {
                     throw new NumberFormatException();
                 } else {
                     Album newAlbum = new Album(name, yearOfRelease, inputID, recordLabel);
-                    if (confirmAlbum(newAlbum, "addition")) {
                         return newAlbum;
-                    }
-                    return null;
                 }
             } catch (NumberFormatException nf) {
                 error(Errors.INVALIDID);

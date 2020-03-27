@@ -232,7 +232,7 @@ public class EditDB {
                 "Name varchar(100)," +
                 "Year int," +
                 "RecordLabel varchar(100)," +
-                "FOREIGN KEY(Artist) REFERENCES Artists(ArtistID)," +
+                "FOREIGN KEY(Artist) REFERENCES Artists(ArtistID) ON DELETE CASCADE ," +
                 "PRIMARY KEY (AlbumID))");
 
         st.executeUpdate("CREATE TABLE IF NOT EXISTS Songs " +
@@ -243,7 +243,7 @@ public class EditDB {
                 "Name varchar (200)," +
                 "Album int," +
                 "PRIMARY KEY (SongID)," +
-                "FOREIGN KEY (Album) REFERENCES Albums(AlbumID))");
+                "FOREIGN KEY (Album) REFERENCES Albums(AlbumID) ON DELETE CASCADE)");
         con.close();
 
     }

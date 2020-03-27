@@ -60,6 +60,18 @@ public class Controller {
                     searchSongByLyrics();
                     break;
                 }
+                case SEARCHARTISTBYNAME: {
+                    searchArtistByName();
+                    break;
+                }
+                case SEARCHALBUMBYNAME: {
+                    searchAlbumByName();
+                    break;
+                }
+                case INITDB: {
+                    initialiseDB();
+                    break;
+                }
                 case EXIT: {
                     keepRunning = false;
                     ev.clear();
@@ -311,6 +323,16 @@ public class Controller {
         }  catch (SQLException ex) {
             ev.error(EnglishView.Errors.DBERROR);
         }
+    }
+
+    private void initialiseDB() {
+        try {
+            databaseFunctions.initDB();
+            databaseFunctions.closeConnection();
+        }  catch (SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+        }
+
     }
 
 }
