@@ -3,6 +3,7 @@ package controller;
 import model.*;
 import model.dbElements.*;
 import view.EnglishView;
+import view.ViewTemplate;
 
 
 import java.sql.*;
@@ -96,9 +97,7 @@ public class Controller {
 
     }
 
-    private void removeArtist() {
 
-    }
 
 
 
@@ -118,7 +117,7 @@ public class Controller {
                     throw new NumberFormatException();
                 } else {
                     album.setArtistID(artistID);
-                    if(ev.confirmAlbum(album)) {
+                    if(ev.confirmAlbum(album, "addition")) {
                         databaseFunctions.addNewAlbum(album);
                         databaseFunctions.closeConnection();
                         ev.clear();
@@ -128,7 +127,7 @@ public class Controller {
                     }
                 }
             } else {
-                if (ev.confirmAlbum(album)) {
+                if (ev.confirmAlbum(album,"addition")) {
                     databaseFunctions.addNewAlbum(album);
                     databaseFunctions.closeConnection();
 
@@ -148,9 +147,7 @@ public class Controller {
     }
 
 
-    private void removeAlbum() {
 
-    }
 
 
     private void addSong() {
@@ -173,7 +170,7 @@ public class Controller {
             }
             //this if then should be working as long as they have set the ID properly
             if (song.getAlbumID() > 0) {
-                if (ev.confirmSong(song)) {
+                if (ev.confirmSong(song, "addition")) {
                     databaseFunctions.addNewSong(song);
                     databaseFunctions.closeConnection();
                     ev.clear();
@@ -192,10 +189,81 @@ public class Controller {
         }
     }
 
-    private void removeSong() {
+    private void removeArtist() {
+        searchArtistByName();
+        String artistString = ev.requestInput(EnglishView.InputRequests.ASKID);
+        try {
+            int artistID = Integer.parseInt(artistString);
+            if(artistID < 1) {
+                throw new NumberFormatException();
+            }
+            Artist art = databaseFunctions.getArtistDB(artistID);
+            if(ev.confirmArtist(art, "removal")) {
+                databaseFunctions.deleteArtist(artistID);
+                databaseFunctions.closeConnection();
+                ev.success();
+            } else {
+                ev.abort();
+            }
+        } catch(NumberFormatException nf) {
+            ev.error(EnglishView.Errors.INVALIDID);
+            ev.abort();
+        } catch(SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
+        }
     }
 
-    private void editSong() {
+    private void removeSong() {
+        searchSongByName();
+        String albumString = ev.requestInput(EnglishView.InputRequests.ASKID);
+        try {
+            int songID = Integer.parseInt(albumString);
+            if(songID < 1) {
+                throw new NumberFormatException();
+            }
+            Song s = databaseFunctions.getSongDB(songID);
+            if(ev.confirmSong(s, "removal")) {
+                databaseFunctions.deleteSong(songID);
+                databaseFunctions.closeConnection();
+                ev.success();
+            } else {
+                ev.abort();
+            }
+
+        } catch(NumberFormatException nf) {
+            ev.error(EnglishView.Errors.INVALIDID);
+            ev.abort();
+        } catch(SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
+        }
+    }
+
+    private void removeAlbum() {
+        searchAlbumByName();
+        String albumString = ev.requestInput(EnglishView.InputRequests.ASKID);
+        try {
+            int albumID = Integer.parseInt(albumString);
+            if(albumID < 1) {
+                throw new NumberFormatException();
+            }
+            Album a = databaseFunctions.getAlbumDB(albumID);
+            if(ev.confirmAlbum(a, "removal")) {
+                databaseFunctions.deleteAlbum(albumID);
+                databaseFunctions.closeConnection();
+                ev.success();
+            } else {
+                ev.abort();
+            }
+
+        } catch(NumberFormatException nf) {
+            ev.error(EnglishView.Errors.INVALIDID);
+            ev.abort();
+        } catch(SQLException ex) {
+            ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
+        }
     }
 
     private void searchArtistByName() {
@@ -215,6 +283,7 @@ public class Controller {
         try {
             ResultSet searchResult = databaseFunctions.searchAlbumsByName(albumName);
             ev.printResultSet(searchResult);
+            databaseFunctions.closeConnection();
         } catch (SQLException ex) {
             ev.error(EnglishView.Errors.DBERROR);
         }
@@ -225,6 +294,8 @@ public class Controller {
         try {
             ResultSet searchResult = databaseFunctions.searchSongsByName(songName);
             ev.printResultSet(searchResult);
+            databaseFunctions.closeConnection();
+
         } catch (SQLException ex) {
             ev.error(EnglishView.Errors.DBERROR);
         }
@@ -235,6 +306,8 @@ public class Controller {
         try {
             ResultSet lyricsSearchResult = databaseFunctions.searchSongByLyrics(songLyrics);
             ev.printResultSet(lyricsSearchResult);
+            databaseFunctions.closeConnection();
+
         }  catch (SQLException ex) {
             ev.error(EnglishView.Errors.DBERROR);
         }

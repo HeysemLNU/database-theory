@@ -95,6 +95,9 @@ public class EnglishView implements ViewTemplate {
                 case 8: {
                     return SelectedOption.SEARCHSONGLYRICS;
                 }
+                case 9: {
+                    return SelectedOption.SEARCHALBUMBYNAME;
+                }
                 case 0: {
                     return SelectedOption.EXIT;
                 }
@@ -123,6 +126,7 @@ public class EnglishView implements ViewTemplate {
         System.out.println("6: Remove Song");
         System.out.println("7: Search Song by name");
         System.out.println("8: Search Song by Lyric Name");
+        System.out.println();
         System.out.println("0: exit");
     }
 
@@ -144,7 +148,7 @@ public class EnglishView implements ViewTemplate {
             error(Errors.INVALIDCC);
         } else {
             Artist a = new Artist(artistName, cc);
-            if (confirmArtist(a)) {
+            if (confirmArtist(a,"addition")) {
                 return a;
             }
         }
@@ -259,7 +263,7 @@ public class EnglishView implements ViewTemplate {
                     throw new NumberFormatException();
                 } else {
                     Album newAlbum = new Album(name, yearOfRelease, inputID, recordLabel);
-                    if (confirmAlbum(newAlbum)) {
+                    if (confirmAlbum(newAlbum, "addition")) {
                         return newAlbum;
                     }
                     return null;
@@ -271,9 +275,9 @@ public class EnglishView implements ViewTemplate {
         }
     }
 
-    public boolean confirmArtist(Artist art) {
+    public boolean confirmArtist(Artist art, String process) {
         System.out.println("The artist is " + art.getName() + " from: " + art.getNationality());
-        System.out.println("Proceed? y/N");
+        System.out.println("Proceed with " + process +"?" + " y/N");
         prompt();
         String choice = sc.nextLine();
         if (choice.equals("y")) {
@@ -283,10 +287,10 @@ public class EnglishView implements ViewTemplate {
         }
     }
 
-    public boolean confirmAlbum(Album alb) {
+    public boolean confirmAlbum(Album alb, String process) {
         System.out.println("The album is " + alb.getName() + " released in " + alb.getYear() +
                 " by the record label " + alb.getRecordLabel() + " with artistID " + alb.getArtistID());
-        System.out.println("Proceed? y/N");
+        System.out.println("Proceed with " + process +"?" + " y/N");
         prompt();
         String choice = sc.nextLine();
         if (choice.equals("y")) {
@@ -296,17 +300,17 @@ public class EnglishView implements ViewTemplate {
         }
     }
 
-    public boolean confirmSong(Song son) {
+    public boolean confirmSong(Song son, String process) {
         String shortLyrics = "";
-        if(son.getLyrics().length() < 31) {
-            shortLyrics = son.getLyrics();
+        if(son.getLyrics().length() > 31) {
+            shortLyrics = son.getLyrics().substring(0,30);
         } else {
-            shortLyrics = son.getLyrics().substring(0, 30);
+            shortLyrics = son.getLyrics();
         }
         System.out.println("The song is " + son.getName() + " released in " + son.getYear() +
-                " with a length of " + son.getLyrics() + " and lyrics starting with " + shortLyrics + "....."
+                " with a length of " + son.getLength() + " and lyrics starting with '" + shortLyrics + ".....'"
         + " where the album ID is " + son.getAlbumID());
-        System.out.println("Proceed? y/N");
+        System.out.println("Proceed with " + process +"?" + " y/N");
         prompt();
         String choice = sc.nextLine();
         if(choice.equals("y")) {
@@ -329,8 +333,9 @@ public class EnglishView implements ViewTemplate {
     }
 
 
+
     public String requestXname(String x) {
-        System.out.println("Introduce the name of the " + x + " you want to search for");
+        System.out.println("Introduce the name of the " + x + " you want");
         prompt();
         String name = sc.nextLine();
         return name;
