@@ -289,4 +289,53 @@ public class EditDB {
         }
 
     }
+    public ResultSet artistSongCountAll() throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT `Artists`.`Name` as `Artist name`, COUNT(`Songs`.`Name`) AS `Song Amount` FROM Songs  RIGHT OUTER join Albums on Songs.Album = Albums.AlbumID RIGHT OUTER join Artists on Albums.Artist = Artists.ArtistID GROUP By `Artists`.`Name`";
+        return getDb.executeQuery(sqlComand);
+    }
+    public ResultSet artistSongCount(int artistID) throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT `Artists`.`Name` as `Artist name`, COUNT(`Songs`.`Name`) AS `Song Amount` FROM Songs  RIGHT OUTER join Albums on Songs.Album = Albums.AlbumID RIGHT OUTER join Artists on Albums.Artist = Artists.ArtistID GROUP By `Artists`.`ArtistID` HAVING Artists.ArtistID = " + artistID;
+        return getDb.executeQuery(sqlComand);
+    }
+    public ResultSet showShortFirst() throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Songs ORDER By Length ASC ";
+        return getDb.executeQuery(sqlComand);
+    }
+    public ResultSet showLongFirst() throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Songs ORDER By Length DESC ";
+        return getDb.executeQuery(sqlComand);
+    }
+    public ResultSet orderByArtistNameCrono() throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID Order By `Artists`.`Name` ASC";
+        return getDb.executeQuery(sqlComand);
+    }
+    public ResultSet orderByArtistNameReCrono() throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID Order By `Artists`.`Name` DESC";
+        return getDb.executeQuery(sqlComand);
+    }
+    public ResultSet orderBySongNameCrono() throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Songs ORDER By Name ASC ";
+        return getDb.executeQuery(sqlComand);
+    }
+    public ResultSet orderBySongNameReCrono() throws SQLException {
+        connect();
+        Statement getDb = con.createStatement();
+        String sqlComand = "SELECT * FROM Songs ORDER By Name DESC ";
+        return getDb.executeQuery(sqlComand);
+    }
+
 }
