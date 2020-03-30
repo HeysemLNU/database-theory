@@ -92,13 +92,16 @@ public class Controller {
                 }
                 case ORDERSONGSLENGTH: {
                     orderSongsLength(false);
+                    break;
 
                 }
                 case ORDERSONGSLENGTHREV: {
                     orderSongsLength(true);
+                    break;
                 }
                 case SHOWALLNUMBEROFSONGSBYARTIST: {
-
+                    numberOfSongsAllArtist();
+                    break;
                 }
                 case EXIT: {
                     keepRunning = false;
@@ -137,6 +140,19 @@ public class Controller {
             //call the database to add the new artist
         }
 
+    }
+
+    private void numberOfSongsAllArtist() {
+        try {
+            ResultSet rs = databaseFunctions.artistSongCountAll();
+            ev.clear();
+            ev.printResultSet(rs);
+            databaseFunctions.closeConnection();
+        } catch (SQLException ex) {
+            ev.clear();
+            ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
+        }
     }
 
     private void orderSongsNameAlphabetically(Boolean reverse) {

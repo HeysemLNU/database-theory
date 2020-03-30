@@ -164,7 +164,7 @@ public class EnglishView implements ViewTemplate {
         System.out.println("15: Show the songs from shortest to longest");
         System.out.println("16: Show the songs from longest to shortest");
         System.out.println("17: Order artists by their name in alphabetical order");
-        System.out.println("10: Order artists by their name in reverse alphabetical order");
+        System.out.println("18: Order artists by their name in reverse alphabetical order");
         System.out.println("0: exit");
     }
 
