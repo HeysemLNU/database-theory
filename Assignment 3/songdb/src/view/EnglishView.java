@@ -101,6 +101,9 @@ public class EnglishView implements ViewTemplate {
                 case 10: {
                     return SelectedOption.SEARCHARTISTBYNAME;
                 }
+                case 11: {
+                    return SelectedOption.COUNTSONGSARTIST;
+                }
                 case 1000: {
                     return SelectedOption.INITDB;
                 }
@@ -124,23 +127,41 @@ public class EnglishView implements ViewTemplate {
     private void printOptions() {
         System.out.println("1: Add Artist");
         System.out.println("2: Remove Artist");
-
         System.out.println("3: Add Album");
         System.out.println("4: Remove Album");
-
         System.out.println("5: Add Song");
         System.out.println("6: Remove Song");
         System.out.println("7: Search Song by name");
         System.out.println("8: Search Song by Lyric Name");
         System.out.println("9: Search album by Name");
         System.out.println("10: Search Artist By Name");
-
+        System.out.println("11: Show the number of songs of an artist");
         System.out.println("0: exit");
     }
 
 
+    public int countSongArtist() {
+        System.out.println("Introduce the ID of the artist you want to see the number of songs they have");
+        System.out.println("If you don't know the ID of the artist press enter with no input");
+        prompt();
+        String input = sc.nextLine();
+        try {
+            if(input.equals("")) {
+                return -1;
+            }
+            int inputID = Integer.parseInt(input);
+            if (inputID < 1) {
+                throw new NumberFormatException();
+            } else {
+                return inputID;
+            }
+        } catch(NumberFormatException nf) {
+             error(Errors.INVALIDID);
+             return 0;
+        }
+    }
+
     public void welcomeMessage() {
-        System.out.println("\n".length());
         System.out.println("Welcome to the music database!");
     }
 
@@ -161,7 +182,6 @@ public class EnglishView implements ViewTemplate {
             }
         }
         return null;
-
     }
 
     public Song addNewSong() {
