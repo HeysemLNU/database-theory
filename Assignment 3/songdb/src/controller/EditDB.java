@@ -301,41 +301,39 @@ public class EditDB {
         String sqlComand = "SELECT `Artists`.`Name` as `Artist name`, COUNT(`Songs`.`Name`) AS `Song Amount` FROM Songs  RIGHT OUTER join Albums on Songs.Album = Albums.AlbumID RIGHT OUTER join Artists on Albums.Artist = Artists.ArtistID GROUP By `Artists`.`ArtistID` HAVING Artists.ArtistID = " + artistID;
         return getDb.executeQuery(sqlComand);
     }
-    public ResultSet showShortFirst() throws SQLException {
+    public ResultSet orderSongsLength(boolean reverse) throws SQLException {
+        //show the shortest songs (by time) first unless reverse is true, then it will show the longest first
         connect();
+        String order = "ASC";
+        if (reverse) {
+            order = "DESC";
+        }
         Statement getDb = con.createStatement();
-        String sqlComand = "SELECT * FROM Songs ORDER By Length ASC ";
+        String sqlComand = "SELECT * FROM Songs ORDER By Length " + order;
         return getDb.executeQuery(sqlComand);
     }
-    public ResultSet showLongFirst() throws SQLException {
+
+    public ResultSet orderByArtistNameAlphabetically(boolean reverse) throws SQLException {
         connect();
+        String order = "ASC";
+        if (reverse) {
+            order = "DESC";
+        }
         Statement getDb = con.createStatement();
-        String sqlComand = "SELECT * FROM Songs ORDER By Length DESC ";
+        String sqlComand = "SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID Order By `Artists`.`Name` " + order;
         return getDb.executeQuery(sqlComand);
     }
-    public ResultSet orderByArtistNameCrono() throws SQLException {
+
+    public ResultSet orderBySongNameAlphabetically(boolean reverse) throws SQLException {
         connect();
+        String order = "ASC";
+        if (reverse) {
+            order = "DESC";
+        }
         Statement getDb = con.createStatement();
-        String sqlComand = "SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID Order By `Artists`.`Name` ASC";
+        String sqlComand = "SELECT Songs.SongID, `Songs`.`Name`,`Artists`.`Name` as 'Artist Name' FROM Songs inner join Albums on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID ORDER By `Songs`.`Name` " + order;
         return getDb.executeQuery(sqlComand);
     }
-    public ResultSet orderByArtistNameReCrono() throws SQLException {
-        connect();
-        Statement getDb = con.createStatement();
-        String sqlComand = "SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID Order By `Artists`.`Name` DESC";
-        return getDb.executeQuery(sqlComand);
-    }
-    public ResultSet orderBySongNameCrono() throws SQLException {
-        connect();
-        Statement getDb = con.createStatement();
-        String sqlComand = "SELECT * FROM Songs ORDER By Name ASC ";
-        return getDb.executeQuery(sqlComand);
-    }
-    public ResultSet orderBySongNameReCrono() throws SQLException {
-        connect();
-        Statement getDb = con.createStatement();
-        String sqlComand = "SELECT * FROM Songs ORDER By Name DESC ";
-        return getDb.executeQuery(sqlComand);
-    }
+
 
 }

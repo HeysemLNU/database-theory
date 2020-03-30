@@ -3,7 +3,6 @@ package controller;
 import model.*;
 import model.dbElements.*;
 import view.EnglishView;
-import view.ViewTemplate;
 
 
 import java.sql.*;
@@ -35,7 +34,7 @@ public class Controller {
                     break;
                 }
                 case COUNTSONGSARTIST: {
-                    showSongsByArtist();
+                    showNumberOfSongsByArtist();
                     break;
                 }
                 case ADDALBUM: {
@@ -46,7 +45,6 @@ public class Controller {
                     removeAlbum();
                     break;
                 }
-
                 case ADDSONG: {
                     addSong();
                     break;
@@ -75,6 +73,33 @@ public class Controller {
                     initialiseDB();
                     break;
                 }
+                case ORDERARTISTNAMEALPHA: {
+                    orderArtistsByNameAlphabetically(false);
+                    break;
+                }
+                case ORDERSONGNAMEALPHA: {
+                    orderSongsNameAlphabetically(false);
+                    break;
+                }
+                case ORDERSONGNAMEALPHAREV: {
+                    //if true it will be reversed
+                    orderSongsNameAlphabetically(true);
+                    break;
+                }
+                case ORDERARTISTNAMEALPHAREV: {
+                    orderArtistsByNameAlphabetically(true);
+                    break;
+                }
+                case ORDERSONGSLENGTH: {
+                    orderSongsLength(false);
+
+                }
+                case ORDERSONGSLENGTHREV: {
+                    orderSongsLength(true);
+                }
+                case SHOWALLNUMBEROFSONGSBYARTIST: {
+
+                }
                 case EXIT: {
                     keepRunning = false;
                     ev.clear();
@@ -94,22 +119,63 @@ public class Controller {
     private void addArtist() {
         Artist artist = ev.addNewArtist();
         if (artist == null) {
-            ev.abort();
             ev.clear();
+            ev.abort();
+
         } else {
             try {
-
                 databaseFunctions.addNewArtist(artist);
                 ev.clear();
                 ev.success();
 
             } catch (SQLException ex) {
+                ev.clear();
                 ev.error(EnglishView.Errors.DBERROR);
+                ev.abort();
             }
 
             //call the database to add the new artist
         }
 
+    }
+
+    private void orderSongsNameAlphabetically(Boolean reverse) {
+        try {
+            ResultSet rs = databaseFunctions.orderBySongNameAlphabetically(reverse);
+            ev.clear();
+            ev.printResultSet(rs);
+            databaseFunctions.closeConnection();
+        } catch (SQLException ex) {
+            ev.clear();
+            ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
+        }
+    }
+
+    private void orderSongsLength(Boolean reverse) {
+        try {
+            ResultSet rs = databaseFunctions.orderSongsLength(reverse);
+            ev.clear();
+            ev.printResultSet(rs);
+            databaseFunctions.closeConnection();
+        } catch (SQLException ex) {
+            ev.clear();
+            ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
+        }
+    }
+
+    private void orderArtistsByNameAlphabetically(Boolean reverse) {
+        try {
+            ResultSet rs = databaseFunctions.orderByArtistNameAlphabetically(reverse);
+            ev.clear();
+            ev.printResultSet(rs);
+            databaseFunctions.closeConnection();
+        } catch (SQLException ex) {
+            ev.clear();
+            ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
+        }
     }
 
 
@@ -142,16 +208,18 @@ public class Controller {
                 if (ev.confirmAlbum(album, "addition")) {
                     databaseFunctions.addNewAlbum(album);
                     databaseFunctions.closeConnection();
-
+                    ev.clear();
                     //wont trigger if catch
                     ev.success();
                 }
 
             }
         } catch (NumberFormatException nf) {
+            ev.clear();
             ev.error(EnglishView.Errors.INVALIDID);
             ev.abort();
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
             ev.abort();
         }
@@ -159,10 +227,11 @@ public class Controller {
 
     }
 
-    private void showSongsByArtist() {
+    private void showNumberOfSongsByArtist() {
         try {
             int inputID = ev.countSongArtist();
             if (inputID == 0) {
+                ev.clear();
                 //if it returns 0
                 ev.abort();
                 return;
@@ -178,9 +247,11 @@ public class Controller {
             ResultSet rs = databaseFunctions.artistSongCount(inputID);
             ev.printResultSet(rs);
         } catch (NumberFormatException fn) {
+            ev.clear();
             ev.error(EnglishView.Errors.INVALIDID);
             ev.abort();
         } catch (SQLException fn) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
             ev.abort();
         }
@@ -193,6 +264,7 @@ public class Controller {
         try {
             //need to use ifs rather than if elses for all the statements to execute!
             if (song == null) {
+                ev.clear();
                 ev.abort();
                 return;
             }
@@ -201,8 +273,7 @@ public class Controller {
                 String albumString = ev.requestInput(EnglishView.InputRequests.ASKID);
                 int albumID = Integer.parseInt(albumString);
                 if (albumID < 1) {
-                    ev.error(EnglishView.Errors.INVALIDID);
-                    ev.abort();
+                    throw new NumberFormatException();
                 }
                 song.setAlbumID(albumID);
             }
@@ -214,14 +285,17 @@ public class Controller {
                     ev.clear();
                     ev.success();
                 } else {
+                    ev.clear();
                     ev.abort();
                 }
 
             }
         } catch (NumberFormatException nf) {
+            ev.clear();
             ev.error(EnglishView.Errors.INVALIDID);
             ev.abort();
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
             ev.abort();
         }
@@ -239,14 +313,18 @@ public class Controller {
             if (ev.confirmArtist(art, "removal")) {
                 databaseFunctions.deleteArtist(artistID);
                 databaseFunctions.closeConnection();
+                ev.clear();
                 ev.success();
             } else {
+                ev.clear();
                 ev.abort();
             }
         } catch (NumberFormatException nf) {
+            ev.clear();
             ev.error(EnglishView.Errors.INVALIDID);
             ev.abort();
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
             ev.abort();
         }
@@ -264,15 +342,19 @@ public class Controller {
             if (ev.confirmSong(s, "removal")) {
                 databaseFunctions.deleteSong(songID);
                 databaseFunctions.closeConnection();
+                ev.clear();
                 ev.success();
             } else {
+                ev.clear();
                 ev.abort();
             }
 
         } catch (NumberFormatException nf) {
+            ev.clear();
             ev.error(EnglishView.Errors.INVALIDID);
             ev.abort();
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
             ev.abort();
         }
@@ -290,15 +372,19 @@ public class Controller {
             if (ev.confirmAlbum(a, "removal")) {
                 databaseFunctions.deleteAlbum(albumID);
                 databaseFunctions.closeConnection();
+                ev.clear();
                 ev.success();
             } else {
+                ev.clear();
                 ev.abort();
             }
 
         } catch (NumberFormatException nf) {
+            ev.clear();
             ev.error(EnglishView.Errors.INVALIDID);
             ev.abort();
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
             ev.abort();
         }
@@ -309,10 +395,13 @@ public class Controller {
         try {
             ResultSet searchResult = databaseFunctions.searchArtistsByName(artistName);
             //here I will continue by actually printing the result set in the view
+            ev.clear();
             ev.printResultSet(searchResult);
             databaseFunctions.closeConnection();
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
         }
     }
 
@@ -320,10 +409,13 @@ public class Controller {
         String albumName = ev.requestXname("album");
         try {
             ResultSet searchResult = databaseFunctions.searchAlbumsByName(albumName);
+            ev.clear();
             ev.printResultSet(searchResult);
             databaseFunctions.closeConnection();
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
         }
     }
 
@@ -331,11 +423,14 @@ public class Controller {
         String songName = ev.requestXname("song");
         try {
             ResultSet searchResult = databaseFunctions.searchSongsByName(songName);
+            ev.clear();
             ev.printResultSet(searchResult);
             databaseFunctions.closeConnection();
 
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
         }
     }
 
@@ -343,11 +438,14 @@ public class Controller {
         String songLyrics = ev.requestXname("lyrics");
         try {
             ResultSet lyricsSearchResult = databaseFunctions.searchSongByLyrics(songLyrics);
+            ev.clear();
             ev.printResultSet(lyricsSearchResult);
             databaseFunctions.closeConnection();
 
         } catch (SQLException ex) {
+            ev.clear();
             ev.error(EnglishView.Errors.DBERROR);
+            ev.abort();
         }
     }
 

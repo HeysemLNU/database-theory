@@ -1,6 +1,7 @@
 package view;
 
 
+
 import model.CountryCode;
 import model.dbElements.Album;
 import model.dbElements.Artist;
@@ -104,6 +105,27 @@ public class EnglishView implements ViewTemplate {
                 case 11: {
                     return SelectedOption.COUNTSONGSARTIST;
                 }
+                case 12: {
+                    return SelectedOption.SHOWALLNUMBEROFSONGSBYARTIST;
+                }
+                case 13: {
+                    return SelectedOption.ORDERSONGNAMEALPHA;
+                }
+                case 14: {
+                    return SelectedOption.ORDERSONGNAMEALPHAREV;
+                }
+                case 15: {
+                    return SelectedOption.ORDERSONGSLENGTH;
+                }
+                case 16: {
+                    return SelectedOption.ORDERSONGSLENGTHREV;
+                }
+                case 17: {
+                    return SelectedOption.ORDERARTISTNAMEALPHA;
+                }
+                case 18: {
+                    return SelectedOption.ORDERARTISTNAMEALPHAREV;
+                }
                 case 1000: {
                     return SelectedOption.INITDB;
                 }
@@ -136,6 +158,13 @@ public class EnglishView implements ViewTemplate {
         System.out.println("9: Search album by Name");
         System.out.println("10: Search Artist By Name");
         System.out.println("11: Show the number of songs of an artist");
+        System.out.println("12: Show the number of songs of all artists");
+        System.out.println("13: Show the songs in alphabetical order");
+        System.out.println("14: Show the songs in reverse alphabetical order");
+        System.out.println("15: Show the songs from shortest to longest");
+        System.out.println("16: Show the songs from longest to shortest");
+        System.out.println("17: Order artists by their name in alphabetical order");
+        System.out.println("10: Order artists by their name in reverse alphabetical order");
         System.out.println("0: exit");
     }
 
