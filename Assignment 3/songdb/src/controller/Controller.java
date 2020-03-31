@@ -12,6 +12,7 @@ public class Controller {
     EditDB databaseFunctions;
     EnglishView ev = new EnglishView();
 
+
     public Controller(ConnectionParams par) {
         this.params = par;
         databaseFunctions = new EditDB(params);
@@ -20,6 +21,7 @@ public class Controller {
     public void startView() {
 
         boolean keepRunning = true;
+        ev.clear();
         ev.welcomeMessage();
 
         while (keepRunning) {
