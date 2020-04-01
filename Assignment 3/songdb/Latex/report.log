@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.3.12)  1 APR 2020 00:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.3.12)  1 APR 2020 05:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -864,26 +864,50 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 
 ] [3
 
-] (./report.aux)
+]
+<img/DB3Diagram.png, id=20, 994.71625pt x 663.47874pt>
+File: img/DB3Diagram.png Graphic file (type png)
+<use img/DB3Diagram.png>
+Package pdftex.def Info: img/DB3Diagram.png  used on input line 122.
+(pdftex.def)             Requested size: 426.79135pt x 284.67273pt.
+ [4
+
+ <./img/DB3Diagram.png>]
+[5
+
+] [6
+
+]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 18
+7.
+ (/usr/share/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 187.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 187.
+ [7] (./report.aux)
 Package logreq Info: Writing requests to 'report.run.xml'.
 \openout1 = `report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21445 strings out of 492167
- 396666 string characters out of 6131558
- 955338 words of memory out of 5000000
- 25618 multiletter control sequences out of 15000+600000
- 562662 words of font info for 51 fonts, out of 8000000 for 9000
+ 21500 strings out of 492167
+ 397392 string characters out of 6131558
+ 957346 words of memory out of 5000000
+ 25661 multiletter control sequences out of 15000+600000
+ 565106 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,12n,67p,878b,2203s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,12n,67p,995b,2203s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
-ts/type1/urw/times/utmb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr
-8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (3 pages, 611898 bytes).
+ts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/ut
+mb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/te
+xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on report.pdf (7 pages, 673365 bytes).
 PDF statistics:
- 32 PDF objects out of 1000 (max. 8388607)
- 19 compressed objects within 1 object stream
+ 52 PDF objects out of 1000 (max. 8388607)
+ 32 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 11 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

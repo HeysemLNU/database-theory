@@ -309,7 +309,7 @@ public class EditDB {
             order = "DESC";
         }
         Statement getDb = con.createStatement();
-        String sqlComand = "SELECT Songs.SongID,`Songs`.`Length`,`Songs`.`Name`,`Albums`.`Name` as `Album Name` FROM Songs inner join Albums on Songs.Album = Albums.AlbumID ORDER By Songs.Length " + order;
+        String sqlComand = "SELECT Songs.SongID,`Songs`.`Length`,`Songs`.`Name`,`Albums`.`Name` as `Album Name` FROM Songs inner join Albums on Songs.Album = Albums.AlbumID ORDER By Length " + order;
         return getDb.executeQuery(sqlComand);
     }
 
