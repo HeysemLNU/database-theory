@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.3.12)  1 APR 2020 05:15
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Arch Linux) (preloaded format=pdflatex 2020.5.6)  8 JUN 2020 09:06
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -676,8 +676,35 @@ LaTeX Warning: Command \underbar  has changed.
 LaTeX Warning: Command \underline  has changed.
                Check if current package is valid.
 
+) (/usr/share/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count388
+\lst@gtempboxa=\box50
+\lst@token=\toks22
+\lst@length=\count389
+\lst@currlwidth=\dimen156
+\lst@column=\count390
+\lst@pos=\count391
+\lst@lostspace=\dimen157
+\lst@width=\dimen158
+\lst@newlines=\count392
+\lst@lineno=\count393
+\lst@maxwidth=\dimen159
+
+(/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
+\c@lstnumber=\count394
+\lst@skipnumbers=\count395
+\lst@framebox=\box51
 )
-\mybox=\box50
+(/usr/share/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2019/09/10 1.8c listings configuration
+))
+Package: listings 2019/09/10 1.8c (Carsten Heinz)
+
+(/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
+File: lstlang1.sty 2019/09/10 1.8c listings language file
+)
+\mybox=\box52
 \mydepth=\skip82
 \myheight=\skip83
 Package csquotes Info: Checking for multilingual support...
@@ -686,7 +713,8 @@ Package csquotes Info: Adjusting default style.
 Package csquotes Info: Redefining alias 'default' -> 'british'.
 Package biblatex Info: Trying to load language 'british'...
 Package biblatex Info: ... file 'british.lbx' found.
- (/usr/share/texmf-dist/tex/latex/biblatex/lbx/british.lbx
+
+(/usr/share/texmf-dist/tex/latex/biblatex/lbx/british.lbx
 File: british.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
 Package biblatex Info: Trying to load language 'english'...
 Package biblatex Info: ... file 'english.lbx' found.
@@ -696,39 +724,39 @@ File: english.lbx 2019/08/31 v3.13a biblatex localization (PK/MW)
 )) (./report.aux)
 \openout1 = `report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 93.
-LaTeX Font Info:    ... okay on input line 93.
-LaTeX Font Info:    Trying to load font information for T1+ptm on input line 93
-.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 116.
+LaTeX Font Info:    ... okay on input line 116.
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 11
+6.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/t1ptm.fd
 File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
 )
-\AtBeginShipoutBox=\box51
+\AtBeginShipoutBox=\box53
 
 (/usr/share/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count388
-\scratchdimen=\dimen156
-\scratchbox=\box52
-\nofMPsegments=\count389
-\nofMParguments=\count390
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count391
-\MPscratchDim=\dimen157
-\MPnumerator=\count392
-\makeMPintoPDFobject=\count393
-\everyMPtoPDFconversion=\toks23
+\scratchcounter=\count396
+\scratchdimen=\dimen160
+\scratchbox=\box54
+\nofMPsegments=\count397
+\nofMParguments=\count398
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count399
+\MPscratchDim=\dimen161
+\MPnumerator=\count400
+\makeMPintoPDFobject=\count401
+\everyMPtoPDFconversion=\toks24
 ) (/usr/share/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -792,8 +820,9 @@ Package biblatex Info: Automatic encoding selection.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'report.bbl' found.
 (./report.bbl)
-Package biblatex Info: Reference section=0 on input line 93.
-Package biblatex Info: Reference segment=0 on input line 93.
+Package biblatex Info: Reference section=0 on input line 116.
+Package biblatex Info: Reference segment=0 on input line 116.
+\c@lstlisting=\count402
 *geometry* verbose mode - [ newgeometry ] result:
 * driver: pdftex
 * paper: a4paper
@@ -827,31 +856,31 @@ Package biblatex Info: Reference segment=0 on input line 93.
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <20.74> on input line 102.
+(Font)              <20.74> on input line 125.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <14.4> on input line 102.
+(Font)              <14.4> on input line 125.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <12> on input line 102.
+(Font)              <12> on input line 125.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 102.
+(Font)              <7> on input line 125.
 <img/lnu_etch.png, id=1, 875.27pt x 1061.9675pt>
 File: img/lnu_etch.png Graphic file (type png)
 <use img/lnu_etch.png>
-Package pdftex.def Info: img/lnu_etch.png  used on input line 104.
+Package pdftex.def Info: img/lnu_etch.png  used on input line 127.
 (pdftex.def)             Requested size: 262.58302pt x 318.5927pt.
 <img/logo.png, id=3, 615.29875pt x 825.0825pt>
 File: img/logo.png Graphic file (type png)
 <use img/logo.png>
-Package pdftex.def Info: img/logo.png  used on input line 104.
+Package pdftex.def Info: img/logo.png  used on input line 127.
 (pdftex.def)             Requested size: 61.53348pt x 82.51308pt.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
 
  <./img/lnu_etch.png> <./img/logo.png>]
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <17.28> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 108.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 131.
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <14> not available
-(Font)              Font shape `T1/ptm/b/n' tried instead on input line 108.
+(Font)              Font shape `T1/ptm/b/n' tried instead on input line 131.
  (./report.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 4.
@@ -868,43 +897,49 @@ LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <12> not available
 <img/DB3Diagram.png, id=20, 994.71625pt x 663.47874pt>
 File: img/DB3Diagram.png Graphic file (type png)
 <use img/DB3Diagram.png>
-Package pdftex.def Info: img/DB3Diagram.png  used on input line 122.
+Package pdftex.def Info: img/DB3Diagram.png  used on input line 145.
 (pdftex.def)             Requested size: 426.79135pt x 284.67273pt.
  [4
 
  <./img/DB3Diagram.png>]
 [5
 
-] [6
-
 ]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 18
-7.
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 20
+0.
  (/usr/share/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 )
+Overfull \hbox (52.91762pt too wide) in paragraph at lines 217--218
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][][][][][][][][][] 
+ []
+
+[6
+
+]
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <8> on input line 187.
+(Font)              <8> on input line 237.
 LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <6> on input line 187.
+(Font)              <6> on input line 237.
  [7] (./report.aux)
 Package logreq Info: Writing requests to 'report.run.xml'.
 \openout1 = `report.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 21500 strings out of 492167
- 397392 string characters out of 6131558
- 957346 words of memory out of 5000000
- 25661 multiletter control sequences out of 15000+600000
- 565106 words of font info for 59 fonts, out of 8000000 for 9000
+ 23184 strings out of 492167
+ 419326 string characters out of 6131559
+ 1003183 words of memory out of 5000000
+ 27328 multiletter control sequences out of 15000+600000
+ 567371 words of font info for 62 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 44i,12n,67p,995b,2203s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 44i,12n,67p,1001b,2203s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/ut
 mb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/te
 xmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on report.pdf (7 pages, 673365 bytes).
+Output written on report.pdf (7 pages, 679794 bytes).
 PDF statistics:
  52 PDF objects out of 1000 (max. 8388607)
  32 compressed objects within 1 object stream

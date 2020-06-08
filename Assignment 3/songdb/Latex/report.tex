@@ -24,6 +24,29 @@
 \addbibresource{ref.bib}
 % Fontsizes for section headings.
 \usepackage{sectsty} 
+\usepackage{listings}
+\usepackage{color}
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=tb,
+	language=Java,
+	aboveskip=3mm,
+	belowskip=3mm,
+	showstringspaces=false,
+	columns=flexible,
+	basicstyle={\small\ttfamily},
+	numbers=none,
+	numberstyle=\tiny\color{gray},
+	keywordstyle=\color{blue},
+	commentstyle=\color{dkgreen},
+	stringstyle=\color{mauve},
+	breaklines=true,
+	breakatwhitespace=true,
+	tabsize=3
+}
+
 \sectionfont{\fontsize{14}{15}\selectfont}
 \subsectionfont{\fontsize{12}{15}\selectfont}
 \subsubsectionfont{\fontsize{12}{15}\selectfont}
@@ -144,7 +167,8 @@ The Artists table will contain all the artists in the database. There are three 
 
 
 
-The next table created was called “Albums” which will contain all the albums in our database. Each of them have to be belong to an artist in the database. The Albums table has 5 attributes: AlbumID, ArtistID, Year, Name and Record Label. AlbumID attribute is a unique individual ID number given to each album in the database. It is the primary key auto-incrementing attribute for the Albums table. The ArtistID attribute is the ID number of the artist that created the album, set as a foreign key. The Year attribute is the year the album was initially released. The Name attribute is the name of the album. Record Label attribute is the name of the record label that marketed the album.All the attributes except the IDs or the year, which are integers, are varchars with the length of 50.
+The next table created was called “Albums” which will contain all the albums in our database. Each of them have to be belong to an artist in the database. The Albums table has 5 attributes: AlbumID, ArtistID, Year, Name and Record Label. AlbumID attribute is a unique individual ID number given to each album in the database. It is the primary key auto-incrementing attribute for the Albums table. The ArtistID attribute is the ID number of the artist that created the album, set as a foreign key. The Year attribute is the year the album was initially released. The Name attribute is the name of the album. Record Label attribute is the name of the record label that marketed the album.
+All the attributes except the IDs or the year, which are integers, are varchars with the length of 50.
 
 Finally the last table created was the “Songs” table which will contain all the songs in our database. Each song has to be released in  an album created by the artist that made the song. In the case of "single" releases, the album will have the same name as the release of the song.
 
@@ -162,21 +186,48 @@ All the ID attributes whether own or foreign are configured to be integers. Year
 
 Our program consists of a number of different SQL queries, but only a few were the necessary queries needed for the assignment.
 
-We did not believe it was necessary to include the literal SQL queries in the report, therefore it will be stated that all the SQL queries can be found inside the EditDB class in the source code.
 
-Two of our queries that implement data from more than one table are the search song by name and the search song by lyrics functionalities.
+
+Two of our queries that implement data from more than one table are the search song by name and the search song by lyrics functionalities. Note that the black text in the queries are variables.
 
 
 \begin{enumerate} 
-	\item The first query, implementing the search by song feature, will perform an inner join on all the tables, since in order to get the name of the artist that released a specific song, a link between the albums and the artists is required. This was done by linking the unique IDs that appear in each of the tables together. After this the name column is switched into lowercase, then compared with the user inputs, which are also switched to lowercase. Wildcards are added to the query so matches containing that name are also returned.
+	\item 
+	
+	
+	The first query, implementing the search by song name feature, will perform an inner join on all the tables, since in order to get the name of the artist that released a specific song, a link between the albums and the artists is required. This was done by linking the unique IDs that appear in each of the tables together. After this the name column is switched into lowercase, then compared with the user inputs, which are also switched to lowercase. Wildcards are added to the query so matches containing that name are also returned.
+	
+	\begin{lstlisting}
+	"SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums" +
+	" on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID " +
+	" WHERE lower(`Songs`.`Name`) like " + "'%" + name.toLowerCase() + "%'"
+	\end{lstlisting}
 	
 	\item The second query respectively is used to perform a case insensitive search on the lyrics of a song. This function will also perform an inner join in the three tables of the database based on the ID. Once again, the column containing the lyrics will be turned into lowercase, afterwards the input lyrics of the will be inserted into lowercase, adding wildcards to ensure the highest possibility of a match.
-
-	\item Another query that uses SQL join to a lesser extent is the query that will order songs by length, and similar. In this case the database will join only the songs and the albums table, performing an inner join. This is used to show the name of the song as well as the album that specific song belongs to. Then, the ASC or DESC keywords will be used in the query to represent the order the songs should be displayed, based on the song length.
 	
-	\item The next query included can count all the songs that each individual artist has. The query will output a table with two columns. One of the columns will have the name of the artist, and the other column will have the amount of songs that artist has. As previously mentioned, all three tables need to be joined for this to work, due to the design of the database. In this case, a right outer join is being used. The reasoning for this being used is that in the case an artist does not have albums or songs related to them, they will still be added to the result of the query. The group keyword is included in order to group the output table by the name of the artist, ensuring that they will appear only once. Utilising the keyword count on the Songs.Name column can allow us to count the amount of songs per artist. This query will print all the artists in the database, which might lead to a long or unstable output, therefore, the query below would be recommended.
+	\begin{lstlisting}
+		"SELECT Songs.SongID,`Songs`.`Name`,`Artists`.`Name` as `Artist name`,`Songs`.`Year`,Songs.Length FROM Songs inner join Albums" +
+		" on Songs.Album = Albums.AlbumID inner join Artists on Albums.Artist = Artists.ArtistID " +
+		" WHERE lower(`Songs`.`Lyrics`) like " + "'%" + lyricsText.toLowerCase() + "%'"
+	\end{lstlisting}
+
+	\item Another query that uses SQL join to a lesser extent is the query that will order songs by length, and similar. In this case the database will join only the songs and the albums table, performing an inner join. This is used to show the name of the song as well as the album that specific song belongs to. Then, the ASC or DESC keywords will be used in the query to represent the order the songs should be displayed, based on the song length. Note that the "order" variable will indicate whether they should be ordered in an ascending or descending manner.
+	
+	\begin{lstlisting}
+		"SELECT Songs.SongID,`Songs`.`Length`,`Songs`.`Name`,`Albums`.`Name` as `Album Name` FROM Songs inner join Albums on Songs.Album = Albums.AlbumID ORDER By Length " + order;
+	\end{lstlisting}
+	
+	\item The next query included can count all the songs that each individual artist has. The query will output a table with two columns. One of the columns will have the name of the artist, and the other column will have the amount of songs that artist has. As previously mentioned, all three tables need to be joined for this to work, due to the design of the database. In this case, a right outer join is being used. The reasoning for this being used is that in the case an artist does not have albums or songs related to them, they will still be added to the result of the query. The group keyword is included in order to group the output table by the name of the artist, ensuring that they will appear only once. Utilising the keyword count on the Songs.Name column can allow us to count the amount of songs per artist. This query will print all the artists in the database, which might lead to a long or unstable output, therefore, last query would be recommended.
+	
+	\begin{lstlisting}
+		"SELECT `Artists`.`Name` as `Artist name`, COUNT(`Songs`.`Name`) AS `Song Amount` FROM Songs  RIGHT OUTER join Albums on Songs.Album = Albums.AlbumID RIGHT OUTER join Artists on Albums.Artist = Artists.ArtistID GROUP By `Artists`.`Name`"
+	\end{lstlisting}
 	
 	\item Finally another query where grouping was implemented would be on the query that allows the user to count the songs of a specific artist. The implementation for this query is essentially the same as for the query above, except in this scenario a "having" clause is implemented in order to match with a specific artist ID.
+	
+	\begin{lstlisting}
+		"SELECT `Artists`.`Name` as `Artist name`, COUNT(`Songs`.`Name`) AS `Song Amount` FROM Songs  RIGHT OUTER join Albums on Songs.Album = Albums.AlbumID RIGHT OUTER join Artists on Albums.Artist = Artists.ArtistID GROUP By `Artists`.`ArtistID` HAVING Artists.ArtistID = " + artistID;
+	\end{lstlisting}
 \end{enumerate}
 
 \section{Supplemental video}
